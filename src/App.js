@@ -60,35 +60,35 @@ function App() {
     });
   };
 
-  const checkSigner = async () => {
-    if (!signer) {
-      await checkExtension();
-    }
-    return true;
-  };
+  // const checkSigner = async () => {
+  //   if (!signer) {
+  //     await checkExtension();
+  //   }
+  //   return true;
+  // };
 
-  const getGreeting = async () => {
-    await checkSigner();
-    const factoryContract = new Contract(
-      factoryContractAddress,
-      FactoryAbi,
-      signer
-    );
-    const result = await factoryContract.greet();
-    setMsg(result);
-  };
+  // const getGreeting = async () => {
+  //   await checkSigner();
+  //   const factoryContract = new Contract(
+  //     factoryContractAddress,
+  //     FactoryAbi,
+  //     signer
+  //   );
+  //   const result = await factoryContract.greet();
+  //   setMsg(result);
+  // };
 
-  const setGreeting = async () => {
-    await checkSigner();
-    const factoryContract = new Contract(
-      factoryContractAddress,
-      FactoryAbi,
-      signer
-    );
-    await factoryContract.setGreeting(msgVal);
-    setMsgVal("");
-    getGreeting();
-  };
+  // const setGreeting = async () => {
+  //   await checkSigner();
+  //   const factoryContract = new Contract(
+  //     factoryContractAddress,
+  //     FactoryAbi,
+  //     signer
+  //   );
+  //   await factoryContract.setGreeting(msgVal);
+  //   setMsgVal("");
+  //   getGreeting();
+  // };
 
   return (
     <div>
