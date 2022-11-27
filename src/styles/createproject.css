@@ -1,0 +1,16 @@
+.mainContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.FormContainer{
+    width: 400px;
+}
+
+.fontCustom{
+    font-size:24px;
+    text-align: center;
+}

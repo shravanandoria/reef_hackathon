@@ -1,0 +1,33 @@
+.heroContainer{
+    display: flex;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 150px 25px 50px 25px;
+}
+.ButtonContainer{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+.normalText{
+    margin: 15px 0 35px 0;
+}
+.btn1{
+    margin-right: 15px;
+}
+.heroImg{
+    height: 400px;
+    width: "auto";
+}
+
+@media only screen and (max-width: 600px){
+    
+    .heroImg{
+        height: 300px;
+        width: "auto";
+        margin-top: 80px;
+    }
+}
