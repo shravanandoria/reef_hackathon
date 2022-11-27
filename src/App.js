@@ -91,7 +91,7 @@ function App() {
   };
 
   return (
-    <div className="bg-black h-52">
+    <div>
       <Navbar />
       <Homepage />
       <Footer />

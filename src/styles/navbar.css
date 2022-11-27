@@ -9,6 +9,9 @@
     color: black;
     box-shadow: 0 1px 1px 1px rgba(9, 9, 9, 0.23);
 }
+.btn-connectwallet{
+    padding: "";
+}
 
 .brand-name {
     text-decoration: none;
@@ -21,7 +24,7 @@
     margin-left: auto;
 }
 
-.navigation-menu ul {
+.navigation-menu .connectwallet {
     display: flex;
     padding: 0;
 }
@@ -66,7 +69,7 @@
         display: block;
     }
 
-    .navigation-menu ul {
+    .navigation-menu .hamburger_sec {
         position: absolute;
         top: 60px;
         left: 0;
@@ -75,6 +78,11 @@
         height: calc(100vh - 77px);
         background-color: white;
         border-top: 1px solid black;
+    }
+    .hamburger_sec{
+        display: flex;
+        align-items: center;
+        text-align: center;
     }
 
     .navigation-menu li {
@@ -92,10 +100,10 @@
         background-color: #eee;
     }
 
-    .navigation-menu ul {
+    .navigation-menu .connectwallet {
         display: none;
       }
-      .navigation-menu.expanded ul {
+      .navigation-menu.expanded .connectwallet {
         display: block;
       }
 }
