@@ -11,12 +11,11 @@ import EditProfile from "./pages/EditProfile";
 import CreateProject from "./pages/CreateProject";
 import Freelancers from "./pages/Freelancers";
 import Footer from "./components/Footer";
-
+import { Route, RouterProvider, createBrowserRouter } from "react-router-dom";
 // const FactoryAbi = ProjectFactory.abi;
 // const factoryContractAddress = ProjectFactory.address;
 
 function App() {
-
   // const checkSigner = async () => {
   //   if (!signer) {
   //     await checkExtension();
@@ -47,10 +46,21 @@ function App() {
   //   getGreeting();
   // };
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Homepage />,
+    },
+    {
+      path: "/createproject",
+      element: <CreateProject />,
+    },
+  ]);
+
   return (
     <div>
       <Navbar />
-      <Homepage />
+      <RouterProvider router={router}></RouterProvider>
       {/* <Freelancers /> */}
       {/* <EditProfile /> */}
       {/* <CreateProject /> */}

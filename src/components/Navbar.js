@@ -7,14 +7,14 @@ import { useState } from "react";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
+import { Link } from "react-router-dom";
 import {
   faShieldHalved,
   faBell,
   faBoltLightning,
   faCoins,
-  faCog
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
-
 
 const Navbar = () => {
   // const categories = ["Web2 Websites", "Web3 Websites", "Mobile Apps"];
@@ -65,7 +65,7 @@ const Navbar = () => {
   return (
     <BootstrapNavbar bg="light" expand="lg">
       <Container>
-        <BootstrapNavbar.Brand href="/">QuickLancer</BootstrapNavbar.Brand>
+        <Nav.Link href="/">QuickLancer</Nav.Link>
         <BootstrapNavbar.Toggle aria-controls="basic-BootstrapNavbar-nav" />
         <BootstrapNavbar.Collapse id="basic-BootstrapNavbar-nav">
           <Nav className="me-auto">
@@ -76,16 +76,20 @@ const Navbar = () => {
                 </Nav.Link>
               </>
             ))} */}
-            <Nav.Link href="#home">Create Project</Nav.Link>
+            <Nav.Link href={"/createproject"}>Create Project</Nav.Link>
             <Nav.Link href="#link">Getting Started</Nav.Link>
             <Nav.Link href="#link">Freelancers</Nav.Link>
             {/* nav drop down  */}
             <NavDropdown title="Categories" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Web2 Websites</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1">
+                Web2 Websites
+              </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 web3 Websites
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Mobile Apps</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">
+                Mobile Apps
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Uik.Button
@@ -96,9 +100,14 @@ const Navbar = () => {
             }
             onClick={checkExtension}
           />
-          {walletAddress ?
-            (<div style={{ marginLeft: "20px" }} > <Uik.Button icon={faCog} size='large' /></div>) : ""
-          }
+          {walletAddress ? (
+            <div style={{ marginLeft: "20px" }}>
+              {" "}
+              <Uik.Button icon={faCog} size="large" />
+            </div>
+          ) : (
+            ""
+          )}
         </BootstrapNavbar.Collapse>
       </Container>
     </BootstrapNavbar>
