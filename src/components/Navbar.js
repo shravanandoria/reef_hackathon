@@ -13,7 +13,7 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
       <Container>
         {/* <Uik.Tag color="green" className="tagStyle" text="QuickLance" /> */}
         <Link
-          style={{ marginRight: "40px", fontWeight: "500", fontSize: "20px" }}
+          style={{ marginRight: "40px", fontWeight: "500", fontSize: "20px", textDecoration: "none", color: "#5D3BAD" }}
           to="/"
         >
           QuickLance
@@ -21,18 +21,18 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
         <BootstrapNavbar.Toggle aria-controls="basic-BootstrapNavbar-nav" />
         <BootstrapNavbar.Collapse id="basic-BootstrapNavbar-nav">
           <Nav className="me-auto">
-            <Link to={"/createproject"}>Create Project</Link>
-            <Link to={"/gettingstarted"}>Getting Started</Link>
-            <Link to={"/freelancers"}>Freelancers</Link>
+            <Link to={"/createproject"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Create Project</Link>
+            <Link to={"/gettingstarted"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Getting Started</Link>
+            <Link to={"/freelancers"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Freelancers</Link>
             {/* nav drop down  */}
             <NavDropdown title="Categories" id="basic-nav-dropdown">
-              <NavDropdown.Item to={"/activeprojects"}>
+              <NavDropdown.Item href={"/activeprojects"}>
                 Web2 Websites
               </NavDropdown.Item>
-              <NavDropdown.Item to={"/activeprojects"}>
+              <NavDropdown.Item href={"/activeprojects"}>
                 web3 Websites
               </NavDropdown.Item>
-              <NavDropdown.Item to={"/activeprojects"}>
+              <NavDropdown.Item href={"/activeprojects"}>
                 Mobile Apps
               </NavDropdown.Item>
             </NavDropdown>
@@ -41,8 +41,8 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
             text={
               connectedWallet
                 ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
-                    40
-                  )}`
+                  40
+                )}`
                 : "Connect Wallet"
             }
             onClick={checkExtension}
