@@ -11,6 +11,8 @@ import darshan from '../assets/darshan.jpg'
 import ani from '../assets/ani.jpg'
 import shravan from '../assets/shravan.jpg'
 import "../styles/freelancers.css"
+import { Link } from "react-router-dom";
+
 
 import CardGroup from 'react-bootstrap/CardGroup';
 import ethindia from '../assets/ethindia.png'
@@ -29,12 +31,12 @@ const Homepage = () => {
           <Uik.Text text="Request | Work | Earn" type="headline" />
           <Uik.Text className='normalText' text="Choose your direction and let's start!!" type="light" />
           <div className='ButtonContainer'>
-            <Nav.Link href={"/createproject"}>
+            <Link to={"/createproject"} className="TextStyleCustom">
               <Uik.Button className='btn1' text='Quick Project' fill />
-            </Nav.Link>
-            <Nav.Link href={"/gettingstarted"}>
+            </Link>
+            <Link to={"/gettingstarted"} className="TextStyleCustom">
               <Uik.Button text='Get Started' success />
-            </Nav.Link>
+            </Link>
           </div>
         </div>
         <div>

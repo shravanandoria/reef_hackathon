@@ -9,13 +9,19 @@
     color: black;
     box-shadow: 0 1px 1px 1px rgba(9, 9, 9, 0.23);
 }
-.tagStyle{
+
+.tagStyle {
     margin-right: 140px;
     font-weight: 500;
     font-size: 20px;
 }
 
-.btn-connectwallet{
+.headStyle2 {
+    text-decoration: none;
+    padding: 30px;
+}
+
+.btn-connectwallet {
     padding: "";
 }
 
@@ -66,7 +72,7 @@
     background-color: #2642af;
 }
 
-.ListStyle{
+.ListStyle {
     margin-top: -7px;
 }
 
@@ -86,7 +92,8 @@
         background-color: white;
         border-top: 1px solid black;
     }
-    .hamburger_sec{
+
+    .hamburger_sec {
         display: flex;
         align-items: center;
         text-align: center;
@@ -109,8 +116,9 @@
 
     .navigation-menu .connectwallet {
         display: none;
-      }
-      .navigation-menu.expanded .connectwallet {
+    }
+
+    .navigation-menu.expanded .connectwallet {
         display: block;
-      }
+    }
 }
