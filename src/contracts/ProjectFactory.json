@@ -2,7 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "ProjectFactory",
   "sourceName": "contracts/ProjectFactory.sol",
-  "address": "0x8340C259cE38479d7EC9AdFDb96e58EE33e954Ec",
+  "address": "0xe68412c11334bD3f23dE37384B6C3f551C8537e6",
   "abi": [
     {
       "inputs": [
@@ -87,11 +87,6 @@
               "internalType": "address payable",
               "name": "freelancer",
               "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "votes",
-              "type": "uint256"
             },
             {
               "internalType": "contract Project",
@@ -199,11 +194,6 @@
           "internalType": "address payable",
           "name": "freelancer",
           "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "votes",
-          "type": "uint256"
         },
         {
           "internalType": "contract Project",
