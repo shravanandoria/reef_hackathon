@@ -9,10 +9,6 @@ import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
 import { Link } from "react-router-dom";
 import {
-  faShieldHalved,
-  faBell,
-  faBoltLightning,
-  faCoins,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 
