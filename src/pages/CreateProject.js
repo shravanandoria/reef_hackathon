@@ -12,25 +12,11 @@ const CreateProject = () => {
                     <Uik.Input label='Project Name' />
                     <Uik.Container>
                         <Uik.Input label='Budget (In REEF)' placeholder='Eg : 10000' />
-                        <Uik.Input label='Deadline' />
+                        <Uik.Input type='date' label='Deadline' />
                     </Uik.Container>
                     <Uik.Input label='Project Description' textarea />
-                    <Uik.Button text='Create' fill />
-                    <Uik.Modal
-                        title='Title'
-                        isOpen={isOpen}
-                        onClose={() => setOpen(false)}
-                        onOpened={() => { }}
-                        onClosed={() => { }}
-                        footer={
-                            <>
-                                <Uik.Button text='Close' onClick={() => setOpen(false)} />
-                                <Uik.Button text='Confirm' fill onClick={() => setOpen(false)} />
-                            </>
-                        }
-                    >
-                        <Uik.Text>Place modal content here ...</Uik.Text>
-                    </Uik.Modal>
+                    <Uik.Input type='file' label='Related Files (optional)' />
+                    <Uik.Button text='Create' fill onClick={() => Uik.notify.success('Successfully Created.')} />
                 </Uik.Form>
             </div>
         </div>

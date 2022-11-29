@@ -1,0 +1,13 @@
+.cardDesign{
+    padding: 100px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardDiv{
+    margin: 15px 40px;
+    max-width: 600px;
+}

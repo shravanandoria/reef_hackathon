@@ -9,6 +9,12 @@
     color: black;
     box-shadow: 0 1px 1px 1px rgba(9, 9, 9, 0.23);
 }
+.tagStyle{
+    margin-right: 140px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
 .btn-connectwallet{
     padding: "";
 }

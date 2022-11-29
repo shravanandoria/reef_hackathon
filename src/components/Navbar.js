@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import { Navbar as BootstrapNavbar } from "react-bootstrap/";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Uik from "@reef-defi/ui-kit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
@@ -22,6 +22,13 @@ const Navbar = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isWalletConnected, setWalletConnected] = useState(false);
   const URL = "wss://rpc-testnet.reefscan.com/ws";
+
+  useEffect(() => {
+    const WalletConnect = localStorage.getItem("walletStatus");
+    setWalletConnected(WalletConnect);
+    if (!isWalletConnected) checkExtension();
+  })
+
   const checkExtension = async () => {
     let allInjected = await web3Enable("Reef");
 
@@ -42,9 +49,10 @@ const Navbar = () => {
       const allAccounts = await web3Accounts();
       setWalletAddress(allAccounts[0].address);
 
+      localStorage.setItem("walletStatus", true);
       allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
 
-      console.log(allAccounts);
+      // console.log(allAccounts);
 
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
 
@@ -57,15 +65,15 @@ const Navbar = () => {
         await wallet.claimDefaultAccount();
       }
 
-      console.log({ wallet });
-
       setSigner(wallet);
     });
   };
+
   return (
     <BootstrapNavbar bg="light" expand="lg">
       <Container>
-        <Nav.Link href="/">QuickLancer</Nav.Link>
+        {/* <Uik.Tag color="green" className="tagStyle" text="QuickLance" /> */}
+        <Nav.Link style={{ marginRight: "40px", fontWeight: "500", fontSize: "20px" }} href="/">QuickLance</Nav.Link>
         <BootstrapNavbar.Toggle aria-controls="basic-BootstrapNavbar-nav" />
         <BootstrapNavbar.Collapse id="basic-BootstrapNavbar-nav">
           <Nav className="me-auto">
@@ -77,17 +85,17 @@ const Navbar = () => {
               </>
             ))} */}
             <Nav.Link href={"/createproject"}>Create Project</Nav.Link>
-            <Nav.Link href="#link">Getting Started</Nav.Link>
-            <Nav.Link href="#link">Freelancers</Nav.Link>
+            <Nav.Link href={"/gettingstarted"}>Getting Started</Nav.Link >
+            <Nav.Link href={"/freelancers"}>Freelancers</Nav.Link>
             {/* nav drop down  */}
             <NavDropdown title="Categories" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
+              <NavDropdown.Item href={"/activeprojects"}>
                 Web2 Websites
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
+              <NavDropdown.Item href={"/activeprojects"}>
                 web3 Websites
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">
+              <NavDropdown.Item href={"/activeprojects"}>
                 Mobile Apps
               </NavDropdown.Item>
             </NavDropdown>
@@ -103,7 +111,9 @@ const Navbar = () => {
           {walletAddress ? (
             <div style={{ marginLeft: "20px" }}>
               {" "}
-              <Uik.Button icon={faCog} size="large" />
+              <Nav.Link href={"/editprofile"}>
+                <Uik.Button icon={faCog} size="large" />
+              </Nav.Link >
             </div>
           ) : (
             ""

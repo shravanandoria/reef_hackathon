@@ -1,0 +1,21 @@
+.freelancersDiv{
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.cardsDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 55px;
+}
+
+.profileStyle{
+    position: absolute;
+    bottom: 50%;
+    right: 37%;
+}
+
+.cardBody{
+    margin-top: 25px;
+}
