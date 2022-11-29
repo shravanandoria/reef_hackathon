@@ -61,9 +61,6 @@ function App() {
     <div>
       <Navbar />
       <RouterProvider router={router}></RouterProvider>
-      {/* <Freelancers /> */}
-      {/* <EditProfile /> */}
-      {/* <CreateProject /> */}
       <Footer />
     </div>
   );

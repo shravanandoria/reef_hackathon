@@ -22,6 +22,7 @@ const Navbar = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isWalletConnected, setWalletConnected] = useState(false);
   const URL = "wss://rpc-testnet.reefscan.com/ws";
+
   const checkExtension = async () => {
     let allInjected = await web3Enable("Reef");
 
@@ -62,6 +63,7 @@ const Navbar = () => {
       setSigner(wallet);
     });
   };
+
   return (
     <BootstrapNavbar bg="light" expand="lg">
       <Container>
