@@ -107,8 +107,8 @@ function App() {
         connectedWallet={connectedWallet.address}
       />
       <Routes>
-        {routes.map((e) => (
-          <Route path={e.path} element={e.element} />
+        {routes.map((e, index) => (
+          <Route key={index} path={e.path} element={e.element} />
         ))}
       </Routes>
       <Footer />

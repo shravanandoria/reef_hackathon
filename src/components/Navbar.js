@@ -5,10 +5,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Uik from "@reef-defi/ui-kit";
 import { Link } from "react-router-dom";
 import {
-  faShieldHalved,
-  faBell,
-  faBoltLightning,
-  faCoins,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 
