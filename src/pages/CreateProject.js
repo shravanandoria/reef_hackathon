@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { createContext, React, useContext, useState } from "react";
 import Uik from "@reef-defi/ui-kit";
 import "../styles/createproject.css";
 import ProjectFactory from "../contracts/ProjectFactory.json";
@@ -7,13 +7,21 @@ import { Contract } from "ethers";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
+import SignerContext from "../signerContext";
 const CreateProject = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();
   const FactoryAbi = ProjectFactory.abi;
   const factoryContractAddress = ProjectFactory.address;
+  const [data, setData] = useState({ name: "", budget: "", desc: "" });
 
+  const { signerState } = useContext(SignerContext);
   const URL = "wss://rpc-testnet.reefscan.com/ws";
+
+  const onChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
+  };
 
   const checkExtension = async () => {
     console.log("check ex called");
@@ -62,9 +70,21 @@ const CreateProject = () => {
   };
 
   const createProject = async () => {
-    await checkSigner();
-    const contract = new Contract(factoryContractAddress, FactoryAbi, signer);
-    const result = contract.createProject()
+    // await checkSigner();
+    if (!signerState) return alert("Please Connect your wallet first");
+    const contract = new Contract(
+      factoryContractAddress,
+      FactoryAbi,
+      signerState
+    );
+    const result = await contract.createProject(
+      data.name,
+      data.desc,
+      [""],
+      "12312",
+      { value: "2000000000000000000" }
+    );
+    console.log(result);
   };
 
   return (
@@ -76,12 +96,22 @@ const CreateProject = () => {
             text="Create Your Project Request"
             type="headline"
           />
-          <Uik.Input label="Project Name" />
+          <Uik.Input onChange={onChange} name="name" label="Project Name" />
           <Uik.Container>
-            <Uik.Input label="Budget (In REEF)" placeholder="Eg : 10000" />
+            <Uik.Input
+              onChange={onChange}
+              name="budget"
+              label="Budget (In REEF)"
+              placeholder="Eg : 10000"
+            />
             <Uik.Input type="date" label="Deadline" />
           </Uik.Container>
-          <Uik.Input label="Project Description" textarea />
+          <Uik.Input
+            onChange={onChange}
+            name="desc"
+            label="Project Description"
+            textarea
+          />
           <Uik.Input type="file" label="Related Files (optional)" />
           <Uik.Button text="Create" fill onClick={createProject} />
         </Uik.Form>

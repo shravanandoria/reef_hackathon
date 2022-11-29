@@ -4,9 +4,7 @@ import { Navbar as BootstrapNavbar } from "react-bootstrap/";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Uik from "@reef-defi/ui-kit";
 import { Link } from "react-router-dom";
-import {
-  faCog,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
   console.log(connectedWallet);
