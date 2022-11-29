@@ -66,6 +66,7 @@ const Navbar = () => {
       }
 
       setSigner(wallet);
+      // localStorage.setItem("signer", wallet);
     });
   };
 
