@@ -2,6 +2,8 @@ import React from 'react'
 import "../styles/homepage.css"
 import HeroSvg from "../assets/hero.svg"
 import Uik from '@reef-defi/ui-kit'
+import Nav from "react-bootstrap/Nav";
+
 
 const Homepage = () => {
   const openPage = () => {
@@ -14,8 +16,12 @@ const Homepage = () => {
         <Uik.Text text="Request | Work | Earn" type="headline" />
         <Uik.Text className='normalText' text="Choose your direction and let's start!!" type="light" />
         <div className='ButtonContainer'>
-          <Uik.Button className='btn1' text='Quick Project' fill />
-          <Uik.Button text='Get Started' success />
+          <Nav.Link href={"/createproject"}>
+            <Uik.Button className='btn1' text='Quick Project' fill />
+          </Nav.Link>
+          <Nav.Link href={"/gettingstarted"}>
+            <Uik.Button text='Get Started' success />
+          </Nav.Link>
         </div>
       </div>
       <div>
