@@ -2,7 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "ProjectFactory",
   "sourceName": "contracts/ProjectFactory.sol",
-  "address": "0xe68412c11334bD3f23dE37384B6C3f551C8537e6",
+  "address": "0x2908429e7Ea5B0ecC36A6Fb272b6F36fEaD618AD",
   "abi": [
     {
       "inputs": [
@@ -17,9 +17,9 @@
           "type": "string"
         },
         {
-          "internalType": "string[]",
+          "internalType": "bytes[]",
           "name": "_images",
-          "type": "string[]"
+          "type": "bytes[]"
         },
         {
           "internalType": "uint256",
@@ -64,9 +64,9 @@
               "type": "bool"
             },
             {
-              "internalType": "string[]",
+              "internalType": "bytes[]",
               "name": "images",
-              "type": "string[]"
+              "type": "bytes[]"
             },
             {
               "internalType": "uint256",
@@ -87,6 +87,11 @@
               "internalType": "address payable",
               "name": "freelancer",
               "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "votes",
+              "type": "uint256"
             },
             {
               "internalType": "contract Project",
@@ -196,12 +201,30 @@
           "type": "address"
         },
         {
+          "internalType": "uint256",
+          "name": "votes",
+          "type": "uint256"
+        },
+        {
           "internalType": "contract Project",
           "name": "project",
           "type": "address"
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "upVote",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
