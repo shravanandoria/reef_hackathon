@@ -30,7 +30,7 @@ contract ProjectFactory {
     function createProject(
         string memory _projectName,
         string memory _projectDesc,
-        string[] memory _images,
+        bytes[] memory _images,
         uint256 _deadline
     ) public payable {
         uint256 projectId = projectCount.current();
@@ -64,7 +64,7 @@ contract ProjectFactory {
 
         for (uint256 i = 0; i < projectId; i++) {
             ProjectInfo storage currentItem = projects[i];
-            items[i] = currentItem;
+            items[currentIndex] = currentItem;
             currentIndex++;
         }
 

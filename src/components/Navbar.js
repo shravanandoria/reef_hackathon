@@ -24,8 +24,9 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
             <Link to={"/createproject"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Create Project</Link>
             <Link to={"/gettingstarted"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Getting Started</Link>
             <Link to={"/freelancers"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Freelancers</Link>
+            <Link to={"/activeprojects"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Active Projects</Link>
             {/* nav drop down  */}
-            <NavDropdown title="Categories" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Categories" id="basic-nav-dropdown">
               <NavDropdown.Item href={"/activeprojects"}>
                 Web2 Websites
               </NavDropdown.Item>
@@ -35,7 +36,7 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
               <NavDropdown.Item href={"/activeprojects"}>
                 Mobile Apps
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
           <Uik.Button
             text={
