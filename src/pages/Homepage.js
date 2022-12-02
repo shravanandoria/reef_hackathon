@@ -2,17 +2,9 @@ import React from 'react'
 import "../styles/homepage.css"
 import HeroSvg from "../assets/hero.svg"
 import Uik from '@reef-defi/ui-kit'
-import Nav from "react-bootstrap/Nav";
 import Card from 'react-bootstrap/Card';
-import apeximg from '../assets/apex.jpg'
-import bgmi from '../assets/bgmi.jpg'
-import suchit from '../assets/suchit.jpg'
-import darshan from '../assets/darshan.jpg'
-import ani from '../assets/ani.jpg'
-import shravan from '../assets/shravan.jpg'
 import "../styles/freelancers.css"
 import { Link } from "react-router-dom";
-
 
 import CardGroup from 'react-bootstrap/CardGroup';
 import ethindia from '../assets/ethindia.png'

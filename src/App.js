@@ -7,7 +7,7 @@ import Freelancers from "./pages/Freelancers";
 import ActiveProjects from "./pages/ActiveProjects";
 import GettingStarted from "./pages/GettingStarted";
 import Footer from "./components/Footer";
-import { Route, BrowserRouter, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
