@@ -15,6 +15,7 @@ const CreateProject = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
+  const [images, setImages] = useState([]);
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -22,6 +23,7 @@ const CreateProject = () => {
     budget: "",
   });
   const FactoryAbi = ProjectFactory.abi;
+
   const factoryContractAddress = ProjectFactory.address;
   const { signerState, address } = useContext(SignerContext);
   const URL = "wss://rpc-testnet.reefscan.com/ws";
@@ -32,11 +34,6 @@ const CreateProject = () => {
       [e.target.name]: e.target.value,
     });
     console.log(data);
-  };
-
-  const uploadFile = async (files) => {
-    const fileURL = uploadFileToIPFS(files);
-    console.log({ fileURL });
   };
 
   const checkExtension = async () => {
@@ -61,8 +58,6 @@ const CreateProject = () => {
 
       allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
 
-      console.log(allAccounts);
-
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
 
       // Claim default account
@@ -73,7 +68,6 @@ const CreateProject = () => {
         );
         await wallet.claimDefaultAccount();
       }
-
       setSigner(wallet);
     });
   };
@@ -85,17 +79,25 @@ const CreateProject = () => {
     return true;
   };
 
+  const onChageFileSave = async (e) => {
+    // setFiles();
+
+    const imageFiles = await uploadFileToIPFS(e.target.files);
+    setImages(imageFiles);
+  };
+
   const cenCreateProject = async (e) => {
     e.preventDefault();
+    // if (!address.address) return alert("Please connect your wallet address");
+    if (!images) return alert("Please provide some images");
     try {
-      const imageFiles = await uploadFileToIPFS(files);
       const res = await axios({
         url: "http://localhost/project/createpost",
         method: "post",
         data: {
           wallet: address.address,
           data,
-          files: imageFiles,
+          files: images,
           date: Date.now(),
         },
       });
@@ -110,80 +112,56 @@ const CreateProject = () => {
   // blockchain
   const createProject = async (e) => {
     e.preventDefault();
-    const date = new Date(data.deadline);
-    console.log(date.getTime());
-    const deadlinInSec = date.getTime() * 1000;
-    const imageFiles = await uploadFileToIPFS(files);
-
-    const budget = ethers.utils.parseEther(data.budget);
+    if (!address.address) return alert("Please connect your wallet");
     await checkSigner();
-    if (!signerState) return alert("Please Connect your wallet first");
-
-    const contract = new Contract(
+    const factoryContract = new Contract(
       factoryContractAddress,
       FactoryAbi,
       signerState
     );
+    const result = await factoryContract.getDeployedProjects();
+    console.log(result);
 
-    let contractData = {
-      name: data.name,
-      desc: data.desc,
-      image: imageFiles,
-      deadline: deadlinInSec.toString(),
-      value: budget.toString(),
-    };
-
-    console.log({ contractData });
-    const result = await contract.createProject(
-      data.name,
-      data.desc,
-      imageFiles,
-      deadlinInSec.toString(),
-      { value: budget.toString() }
-    );
-    const projects = await contract.getDeployedProjects();
-    console.log({ projects });
+    console.log(result);
   };
 
   return (
     <div className="mainContainer">
       <div className="FormContainer">
         <form onSubmit={cenCreateProject}>
-          <Uik.Form>
-            <Uik.Text
-              className="fontCustom"
-              text="Create Your Project Request"
-              type="headline"
-            />
-            <Uik.Input onChange={onChange} name="title" label="Project Name" />
-            <Uik.Container>
-              <Uik.Input
-                onChange={onChange}
-                name="budget"
-                label="Budget (In REEF)"
-                placeholder="Eg : 10000"
-              />
-              <Uik.Input
-                type="date"
-                label="Deadline"
-                name="deadline"
-                onChange={onChange}
-              />
-            </Uik.Container>
+          <Uik.Text
+            className="fontCustom"
+            text="Create Your Project Request"
+            type="headline"
+          />
+          <Uik.Input onChange={onChange} name="title" label="Project Name" />
+          <Uik.Container>
             <Uik.Input
               onChange={onChange}
-              name="description"
-              label="Project Description"
-              textarea
+              name="budget"
+              label="Budget (In REEF)"
+              placeholder="Eg : 10000"
             />
-            <input
-              type="file"
-              name="files"
-              multiple="multiple"
-              placeholder="input files"
-              onChange={(e) => setFiles(e.target.files)}
+            <Uik.Input
+              type="date"
+              label="Deadline"
+              name="deadline"
+              onChange={onChange}
             />
-          </Uik.Form>
+          </Uik.Container>
+          <Uik.Input
+            onChange={onChange}
+            name="description"
+            label="Project Description"
+            textarea
+          />
+          <input
+            type="file"
+            name="files"
+            multiple="multiple"
+            placeholder="input files"
+            onChange={onChageFileSave}
+          />
           <Uik.Button text="Create" fill type="submit" />
         </form>
       </div>
