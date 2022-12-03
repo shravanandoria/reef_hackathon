@@ -1,14 +1,16 @@
 import axios from "axios";
+import { useState, useContext } from "react";
+import SignerContext from "../signerContext";
+
 const keys = {
   api: "f5adb195db4a091fc2b8",
   secret: "45a5b65ef92291b54bd02c781daac7d14f0967ae4d9f42c29ae23b0947b30d3b",
 };
 
-export const uploadFileToIPFS = async (files) => {
-  const baseURL = "https://gateway.pinata.cloud/ipfs/";
+export const uploadFileToIPFS = (files) => {
+  // const baseURL = "https://gateway.pinata.cloud/ipfs/";
   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-  let imageURL = [];
-
+  let imgUrl = [];
   try {
     Array.from(files).forEach(async (file) => {
       let data = new FormData();
@@ -31,9 +33,9 @@ export const uploadFileToIPFS = async (files) => {
         },
       });
       const imgLink = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
-      imageURL.push(imgLink);
+      imgUrl.push(imgLink);
     });
-    return imageURL;
+    return imgUrl;
   } catch (error) {
     return {
       success: false,
