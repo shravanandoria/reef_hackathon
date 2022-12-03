@@ -6,7 +6,7 @@ import "../styles/project.css";
 import ethindia from '../assets/ethindia.png'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
-
+import Modal from 'react-bootstrap/Modal';
 
 import "swiper/swiper-bundle.min.css";
 // import "swiper/swiper-bundle.min.css/free-mode";
@@ -15,6 +15,17 @@ import "swiper/swiper-bundle.min.css";
 import { FreeMode, Pagination } from "swiper";
 const Project = () => {
   const [show, setShow] = useState(false);
+  const [apply, setApply] = useState(false);
+  const [value, setValue] = useState("")
+
+  const handleSubmit = () => {
+    // setApply(false);
+  };
+  const handleClose = () => {
+    setApply(false);
+  };
+  const handleShow = () => setApply(true);
+
   return (
     <>
       <Uik.Card title='' condensed>
@@ -38,14 +49,14 @@ const Project = () => {
             </div>
 
             <div className='userProfile'>
-            <Uik.Label text='Requested By' className='userText' />
-            <Link to={"/profile"} style={{textDecoration:"none"}}>
-              <Uik.Avatar
-                name="Darshan Petkar"
-                image={ethindia}
-                className="avatarTest"
-              />
-            </Link>
+              <Uik.Label text='Requested By' className='userText' />
+              <Link to={"/profile"} style={{ textDecoration: "none" }}>
+                <Uik.Avatar
+                  name="Darshan Petkar"
+                  image={ethindia}
+                  className="avatarTest"
+                />
+              </Link>
             </div>
 
             <Uik.Text
@@ -60,15 +71,15 @@ const Project = () => {
           </div>
         </div>
         <div className='btndiv'>
-          <Uik.Button text='Apply' success className='applyBtn' />
+          <Uik.Button text='Apply' onClick={handleShow} success className='applyBtn' />
           <Uik.Tooltip text='Coming Soon..' position='right'>
-            {!show && <Button onClick={() => setShow(true)} className='applyBtn'>See Alert</Button>}
+            {!show && <Button onClick={() => setShow(true)} className='applyBtn'>See Message</Button>}
             <Uik.Button text='Chat' />
           </Uik.Tooltip>
         </div>
 
         <Alert show={show} variant="success">
-          <Alert.Heading>Important Alert !</Alert.Heading>
+          <Alert.Heading>Important Message !</Alert.Heading>
           <p>
             Please make a reliable request for the project, the requester of this project will definitely select the best deal :
           </p>
@@ -118,6 +129,25 @@ const Project = () => {
         </div>
 
       </Uik.Card>
+      <Modal show={apply} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Submit a Proposal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Uik.Input
+            label='Coat (Your coatation in Reef)'
+            value={value}
+            required={true}
+            onInput={e => setValue(e.target.value)}
+          />
+          <Uik.Input required={true} label='Summary (How will you work/Which tech stack will you use)' textarea className='inputTextarea' />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

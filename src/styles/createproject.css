@@ -6,13 +6,12 @@
     margin-bottom: 50px;
 }
 
-.FormContainer{
-    width: 400px;
+.containerStyle{
+    margin: 12px 2px;
 }
 
-.fontCustom{
-    font-size:24px;
-    text-align: center;
+.FormContainer{
+    width: 400px;
 }
 
 .filesInt{
@@ -21,4 +20,16 @@
 
 .labelTextt{
     margin: 12px 2px;
+}
+
+.fontCustom{
+    font-size:22px;
+    text-align: center;
+    width: 500px;
+}
+
+@media only screen and (max-width:600px){
+    .fontCustom{
+        width: 300px;
+    }
 }

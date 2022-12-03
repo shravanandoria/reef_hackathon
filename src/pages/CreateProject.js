@@ -1,6 +1,5 @@
 import { React, useContext, useState, useEffect } from "react";
 import Uik from "@reef-defi/ui-kit";
-import "../styles/createproject.css";
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import { Contract } from "ethers";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
@@ -13,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+
+import "../styles/createproject.css";
+
 
 const CreateProject = () => {
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ const CreateProject = () => {
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const [images, setImages] = useState([]);
   const [data, setData] = useState({
@@ -99,9 +102,12 @@ const CreateProject = () => {
 
   const onChageFileSave = async (e) => {
     // setFiles();
-
+    console.log("loading true")
+    setIsLoading(true);
     const imageFiles = await uploadFileToIPFS(e.target.files);
     setImages(imageFiles);
+    console.log("loading false")
+    setIsLoading(false);
   };
 
   const cenCreateProject = async (e) => {
@@ -155,18 +161,20 @@ const CreateProject = () => {
             text="Create Your Project Request"
             type="headline"
           />
-          <Uik.Input onChange={onChange} name="title" label="Project Name" />
-          <Uik.Container>
+          <Uik.Input onChange={onChange} name="title" label="Project Name" required={true} />
+          <Uik.Container className="containerStyle">
             <Uik.Input
               onChange={onChange}
               name="budget"
               label="Budget (In REEF)"
               placeholder="Eg : 10000"
+              required={true}
             />
             <Uik.Input
               type="date"
               label="Deadline"
               name="deadline"
+              required={true}
               onChange={onChange}
             />
           </Uik.Container>
@@ -174,10 +182,11 @@ const CreateProject = () => {
             onChange={onChange}
             name="description"
             label="Project Description"
+            required={true}
             textarea
           />
           <>
-            <Uik.Label text='Project Related Files (JPG/PNG)' className="labelTextt" />
+            <Uik.Label text='Project Related Files (JPG/PNG)' className="labelTextt" required={true}/>
           </>
           <input
             type="file"
