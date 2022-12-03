@@ -18,6 +18,7 @@ import axios from "axios";
 import Project from "./pages/Project";
 import CreateProfile from "./pages/CreateProfile";
 import Profile from "./pages/Profile";
+import ProjectPage from "./pages/ProjectPage";
 
 function App() {
   const routes = [
@@ -56,6 +57,10 @@ function App() {
     {
       path: "/profile",
       element: <Profile />,
+    },
+    {
+      path: "/project/:id",
+      element: <ProjectPage />,
     },
   ];
 
