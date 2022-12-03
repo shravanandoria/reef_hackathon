@@ -1,28 +1,102 @@
-
-.fontCustom{
-    font-size:28px;
+.fontCustom {
+    font-size: 28px;
     text-align: start;
     margin: 12px 2px;
 }
 
-.title{
+.titleProject {
     font-size: 18px;
-    margin: 12px 2px;
+    margin-top: 20px;
+    width: 75%;
 }
-.applyBtn{
+
+.applyBtn {
     margin-right: 15px;
 }
 
-.btndiv{
-    display: flex ;
+.btndiv {
+    display: flex;
     margin: 15px 2px;
 }
 
-.labelDiv{
+.labelDiv {
     display: flex;
     position: relative;
 }
 
-.labelText{
+.labelText {
     font-size: 12px;
+}
+
+.ImageDiv {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.textDivProj {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.ImageDiv img {
+    height: 200px;
+    width: auto;
+    /* margin: 8px 15px; */
+}
+
+.divDesign{
+    display: flex;
+    /* flex-wrap: wrap; */
+    width: 100%;
+    margin-top: 30px;
+}
+
+.divTextArea{
+    /* width: 50%; */
+    margin-left: 15px;
+}
+
+.ImageDivHero{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 80px;
+    /* width: 50%; */
+}
+
+.heroImgMain{
+    height: 300px;
+    width: auto;
+}
+
+.userProfile{
+    margin-top: 15px;
+    position: relative;
+}
+
+.userText{
+    font-size: 12px;
+    position: absolute;
+    margin-left: 50px;
+    bottom: 22px;
+    cursor: pointer;
+}
+
+.avatarTest{
+    margin-top: 25px;
+    text-decoration: none;
+}
+
+
+@media only screen and (max-width: 1000px){
+    .ImageDivHero{
+        display:"none";
+        margin-right: 0;
+    }
+    .heroImgMain{
+        display: none;
+    }
+    .title{
+        width: 100%;
+    }
 }

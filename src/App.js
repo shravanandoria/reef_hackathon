@@ -17,6 +17,7 @@ import SignerContext from "./signerContext";
 import axios from "axios";
 import Project from "./pages/Project";
 import CreateProfile from "./pages/CreateProfile";
+import Profile from "./pages/Profile";
 
 function App() {
   const routes = [
@@ -51,6 +52,10 @@ function App() {
     {
       path: "/createprofile",
       element: <CreateProfile />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
   ];
 
