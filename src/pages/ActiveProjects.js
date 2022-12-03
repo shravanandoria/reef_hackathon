@@ -12,8 +12,10 @@ import { Contract } from "ethers";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+
 const ActiveProjects = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();

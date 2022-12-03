@@ -1,13 +1,13 @@
 .cardDesign{
     padding: 100px 40px;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    /* flex-direction: column; */
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .cardDiv{
     margin: 15px 40px;
-    max-width: 600px;
+    width: 600px;
 }

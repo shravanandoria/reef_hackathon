@@ -9,12 +9,30 @@ import { WsProvider } from "@polkadot/rpc-provider";
 import SignerContext from "../signerContext";
 import { uploadAllFiles, uploadFileToIPFS } from "../pinata/uploadFiles";
 import { ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const CreateProject = () => {
+  const navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+
+  const handleOpen = () => {
+    setShow(false);
+    navigate("/activeprojects");
+  };
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
+
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [images, setImages] = useState([]);
 
   const [data, setData] = useState({
@@ -89,6 +107,7 @@ const CreateProject = () => {
 
   const cenCreateProject = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // if (!address.address) return alert("Please connect your wallet address");
     if (!images) return alert("Please provide some images");
     try {
@@ -105,6 +124,8 @@ const CreateProject = () => {
 
       const result = await res.data;
       console.log(result);
+      setIsLoading(false);
+      handleShow();
     } catch (error) {
       console.log(error);
     }
@@ -156,16 +177,37 @@ const CreateProject = () => {
             label="Project Description"
             textarea
           />
+          <>
+            <Uik.Label text='Project Related Files (JPG/PNG)' className="labelTextt" />
+          </>
           <input
             type="file"
             name="files"
             multiple="multiple"
             placeholder="input files"
+            className="filesInt"
             onChange={onChageFileSave}
           />
-          <Uik.Button text="Create" fill type="submit" />
+          {isLoading ? (<Uik.Button text='Button' loading size='small' />) : (<Uik.Button text="Create" fill type="submit" />)}
         </form>
       </div>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Project Request Created 😃</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You have successfully requested the project, Click on close to add more projects!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleOpen}>
+            Explore
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -6,6 +6,38 @@ const GettingStarted = () => {
   return (
     <>
       <Uik.Container vertical className="container gettingStartedDiv">
+      <Uik.Text
+          className="title"
+          text="Overview Of QuickLance"
+          type="title"
+        />
+        <Uik.Text
+          className="textDiv"
+          type="light"
+          text={
+            <>
+              <span>
+                {" "}
+                Quicklance is the first decentralized platform for freelancers
+                when they can find projects <br /> and work on them safely and
+                get payments securly.
+              </span>
+            </>
+          }
+        />
+        <Uik.Text
+          className="textDiv"
+          type="light"
+          text={
+            <>
+              <span>
+                {" "}
+                Powered by <Uik.Tag color="pink" text="Reef" />
+              </span>
+            </>
+          }
+        />
+        <br/>
         <Uik.Text
           className="title"
           text="Find The Best Work For You 🎉"
@@ -65,39 +97,6 @@ const GettingStarted = () => {
             </>
           }
           type="light"
-        />
-        <br />
-        <Uik.Text
-          className="title"
-          text="Overview Of QuickLance"
-          type="title"
-        />
-        <Uik.Text
-          className="textDiv"
-          type="light"
-          text={
-            <>
-              <span>
-                {" "}
-                Quicklance is the first decentralized platform for freelancers
-                when they can find projects <br /> and work on them safely and
-                get payments securly.
-              </span>
-            </>
-          }
-        />
-        <Uik.Text
-          className="textDiv"
-          type="light"
-          text={
-            <>
-              <span>
-                {" "}
-                Powered by <Uik.Tag color="pink" text="Reef" />
-              </span>
-              {/* <Uik.FishAnimation /> */}
-            </>
-          }
         />
       </Uik.Container>
     </>

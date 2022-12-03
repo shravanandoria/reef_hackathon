@@ -65,7 +65,7 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) =>
           {connectedWallet ? (
             <div style={{ marginLeft: "20px" }}>
               {" "}
-              <Link to={"/editprofile"}>
+              <Link to={"/createprofile"}>
                 <Uik.Button icon={faCog} size="large" />
               </Link>
             </div>
