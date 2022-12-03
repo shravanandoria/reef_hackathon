@@ -15,6 +15,7 @@ import { WsProvider } from "@polkadot/rpc-provider";
 import { useContext } from "react";
 import SignerContext from "./signerContext";
 import Project from "./pages/Project";
+import CreateProfile from "./pages/CreateProfile";
 
 function App() {
   const routes = [
@@ -45,6 +46,10 @@ function App() {
     {
       path: "/project",
       element: <Project />,
+    },
+    {
+      path: "/createprofile",
+      element: <CreateProfile />,
     },
   ];
 

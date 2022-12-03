@@ -17,8 +17,16 @@ const Project = () => {
           text="Integrate web3.js library in Reef Dapp"
           type="headline"
         />
-
-        <Uik.Tag color="purple" text="25 November, 2022" />
+        <div className='labelDiv'>
+          <div style={{marginRight:"20px"}}>
+            <Uik.Label text='Published On' className='labelText'/>
+            <Uik.Tag color="purple" text="25 November, 2022" />
+          </div>
+          <div>
+            <Uik.Label text='Deadline At'  className='labelText' />
+            <Uik.Tag color="yellow" text="21 November, 2022"/>
+          </div>
+        </div>
 
         <Uik.Text
           className="title"
@@ -28,15 +36,12 @@ const Project = () => {
 
         {/* <Uik.Button text='Apply' fill/> */}
         <div className='btndiv'>
-          
+
           <Uik.Button text='Apply' success className='applyBtn' />
           <Uik.Tooltip text='Coming Soon..' position='right'>
-    <Uik.Button text='Chat'/>
-  </Uik.Tooltip>
+            <Uik.Button text='Chat' />
+          </Uik.Tooltip>
         </div>
-
-        <Uik.Text text="Create a website for eth india"
-          type="description" />
 
         <Alert show={show} variant="success">
           <Alert.Heading>Important Alert !</Alert.Heading>
