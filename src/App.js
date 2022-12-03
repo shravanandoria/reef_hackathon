@@ -65,7 +65,7 @@ function App() {
   const [connecting, setConnecting] = useState(false);
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [connectedWallet, setConnectedWallet] = useState("");
-
+  
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
   const checkExtension = async () => {

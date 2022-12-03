@@ -35,9 +35,10 @@ const CreateProject = () => {
   };
 
   const uploadFile = async (files) => {
-    const fileURL = await uploadFileToIPFS(files);
+    const fileURL = uploadFileToIPFS(files);
     console.log({ fileURL });
   };
+
   const checkExtension = async () => {
     console.log("check ex called");
     let allInjected = await web3Enable("Reef");
@@ -117,6 +118,7 @@ const CreateProject = () => {
     const budget = ethers.utils.parseEther(data.budget);
     await checkSigner();
     if (!signerState) return alert("Please Connect your wallet first");
+
     const contract = new Contract(
       factoryContractAddress,
       FactoryAbi,
