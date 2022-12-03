@@ -2,7 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "ProjectFactory",
   "sourceName": "contracts/ProjectFactory.sol",
-  "address": "0x2908429e7Ea5B0ecC36A6Fb272b6F36fEaD618AD",
+  "address": "0xcd7992959CF340687d766A3Ef9a054d4a2a1939c",
   "abi": [
     {
       "inputs": [
@@ -17,9 +17,9 @@
           "type": "string"
         },
         {
-          "internalType": "bytes[]",
+          "internalType": "string[]",
           "name": "_images",
-          "type": "bytes[]"
+          "type": "string[]"
         },
         {
           "internalType": "uint256",
@@ -64,9 +64,84 @@
               "type": "bool"
             },
             {
-              "internalType": "bytes[]",
+              "internalType": "string[]",
               "name": "images",
-              "type": "bytes[]"
+              "type": "string[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "date",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "deadline",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address payable",
+              "name": "_owner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "freelancer",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "votes",
+              "type": "uint256"
+            },
+            {
+              "internalType": "contract Project",
+              "name": "project",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct ProjectFactory.ProjectInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDeployedProjects",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "projectId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "projectName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "projectDesc",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "budget",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isComplete",
+              "type": "bool"
+            },
+            {
+              "internalType": "string[]",
+              "name": "images",
+              "type": "string[]"
             },
             {
               "internalType": "uint256",

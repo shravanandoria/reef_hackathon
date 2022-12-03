@@ -6,7 +6,7 @@ import Uik from "@reef-defi/ui-kit";
 import { Link } from "react-router-dom";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
+const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) => {
   console.log(connectedWallet);
   return (
     <BootstrapNavbar bg="light" expand="lg">
@@ -24,8 +24,9 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
             <Link to={"/createproject"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Create Project</Link>
             <Link to={"/gettingstarted"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Getting Started</Link>
             <Link to={"/freelancers"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Freelancers</Link>
+            <Link to={"/activeprojects"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Active Projects</Link>
             {/* nav drop down  */}
-            <NavDropdown title="Categories" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Categories" id="basic-nav-dropdown">
               <NavDropdown.Item href={"/activeprojects"}>
                 Web2 Websites
               </NavDropdown.Item>
@@ -35,9 +36,9 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
               <NavDropdown.Item href={"/activeprojects"}>
                 Mobile Apps
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
-          <Uik.Button
+          {connecting ? (<Uik.Button text='Button' loading size='large'/>) : (<Uik.Button
             text={
               connectedWallet
                 ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
@@ -46,13 +47,24 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
                 : "Connect Wallet"
             }
             onClick={checkExtension}
-          />
+          />)}
+          {/* <Uik.Button
+            text={
+              connectedWallet
+                ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
+                  40
+                )}`
+                : "Connect Wallet"
+            }
+            onClick={checkExtension}
+          /> */}
+
           {connectedWallet ? (
             <div style={{ marginLeft: "20px" }}>
               {" "}
-              {/* <Link to={"/editprofile"}> */}
+              <Link to={"/editprofile"}>
               <Uik.Button icon={faCog} size="large" />
-              {/* </Link> */}
+              </Link>
             </div>
           ) : (
             ""
