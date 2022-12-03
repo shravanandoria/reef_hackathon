@@ -16,6 +16,7 @@ import { useContext } from "react";
 import SignerContext from "./signerContext";
 import axios from "axios";
 import Project from "./pages/Project";
+import CreateProfile from "./pages/CreateProfile";
 
 function App() {
   const routes = [
@@ -46,6 +47,10 @@ function App() {
     {
       path: "/project",
       element: <Project />,
+    },
+    {
+      path: "/createprofile",
+      element: <CreateProfile />,
     },
   ];
 

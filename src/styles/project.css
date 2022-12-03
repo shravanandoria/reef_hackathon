@@ -17,3 +17,12 @@
     display: flex ;
     margin: 15px 2px;
 }
+
+.labelDiv{
+    display: flex;
+    position: relative;
+}
+
+.labelText{
+    font-size: 12px;
+}
