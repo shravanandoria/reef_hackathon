@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useState, useEffect } from "react";
 import Uik from "@reef-defi/ui-kit";
 import "../styles/createproject.css";
 import ProjectFactory from "../contracts/ProjectFactory.json";
@@ -9,20 +9,21 @@ import { WsProvider } from "@polkadot/rpc-provider";
 import SignerContext from "../signerContext";
 import { uploadAllFiles, uploadFileToIPFS } from "../pinata/uploadFiles";
 import { ethers } from "ethers";
+import axios from "axios";
 
 const CreateProject = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
   const [data, setData] = useState({
-    name: "",
-    budget: "",
+    title: "",
+    description: "",
     deadline: 0,
-    desc: "",
+    budget: "",
   });
   const FactoryAbi = ProjectFactory.abi;
   const factoryContractAddress = ProjectFactory.address;
-  const { signerState } = useContext(SignerContext);
+  const { signerState, address } = useContext(SignerContext);
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
   const onChange = (e) => {
@@ -83,6 +84,29 @@ const CreateProject = () => {
     return true;
   };
 
+  const cenCreateProject = async (e) => {
+    e.preventDefault();
+    try {
+      const imageFiles = await uploadFileToIPFS(files);
+      const res = await axios({
+        url: "http://localhost/project/createpost",
+        method: "post",
+        data: {
+          wallet: address.address,
+          data,
+          files: imageFiles,
+          date: Date.now(),
+        },
+      });
+
+      const result = await res.data;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // blockchain
   const createProject = async (e) => {
     e.preventDefault();
     const date = new Date(data.deadline);
@@ -122,14 +146,14 @@ const CreateProject = () => {
   return (
     <div className="mainContainer">
       <div className="FormContainer">
-        <form onSubmit={createProject}>
+        <form onSubmit={cenCreateProject}>
           <Uik.Form>
             <Uik.Text
               className="fontCustom"
               text="Create Your Project Request"
               type="headline"
             />
-            <Uik.Input onChange={onChange} name="name" label="Project Name" />
+            <Uik.Input onChange={onChange} name="title" label="Project Name" />
             <Uik.Container>
               <Uik.Input
                 onChange={onChange}
@@ -146,7 +170,7 @@ const CreateProject = () => {
             </Uik.Container>
             <Uik.Input
               onChange={onChange}
-              name="desc"
+              name="description"
               label="Project Description"
               textarea
             />

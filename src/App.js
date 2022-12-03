@@ -14,6 +14,7 @@ import { WsProvider } from "@polkadot/rpc-provider";
 
 import { useContext } from "react";
 import SignerContext from "./signerContext";
+import axios from "axios";
 
 function App() {
   const routes = [
@@ -43,7 +44,7 @@ function App() {
     },
   ];
 
-  const { setSignerState } = useContext(SignerContext);
+  const { setSignerState, setAddress } = useContext(SignerContext);
 
   const [signer, setSigner] = useState();
   const [isWalletConnected, setWalletConnected] = useState(false);
@@ -75,6 +76,7 @@ function App() {
 
       console.log(allAccounts);
       setConnectedWallet(allAccounts[0]);
+      setAddress(allAccounts[0]);
 
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
 
@@ -91,6 +93,16 @@ function App() {
       setSignerState(wallet);
     });
   };
+
+  // const createAccount = async () => {
+  //   const res = await axios({
+  //     url: "http://localhost/auth/signup",
+  //     method: "post",
+  //     data: {
+
+  //     }
+  //   })
+  // }
 
   const checkSigner = async () => {
     if (!signer) {

@@ -12,7 +12,7 @@ contract ProjectFactory {
         string projectDesc;
         uint256 budget;
         bool isComplete;
-        string[] images;
+        string[3] images;
         uint256 date;
         uint256 deadline;
         address payable _owner;
@@ -20,7 +20,7 @@ contract ProjectFactory {
         uint256 votes;
         Project project;
     }
-
+    
     mapping(uint256 => ProjectInfo) public projects;
     mapping(uint256 => Project) public projectAddresses;
     mapping(address => bool) public hasVoted;
