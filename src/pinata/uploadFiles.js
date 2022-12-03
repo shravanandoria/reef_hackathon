@@ -7,7 +7,7 @@ const keys = {
 export const uploadFileToIPFS = async (files) => {
   const baseURL = "https://gateway.pinata.cloud/ipfs/";
   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-  const imageURL = [""];
+  let imageURL = [];
 
   try {
     Array.from(files).forEach(async (file) => {
@@ -31,9 +31,7 @@ export const uploadFileToIPFS = async (files) => {
         },
       });
       const imgLink = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
-      if (res.data.IpfsHash.length > 0) {
-        imageURL.push(imgLink);
-      }
+      imageURL.push(imgLink);
     });
     return imageURL;
   } catch (error) {

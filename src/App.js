@@ -14,6 +14,7 @@ import { WsProvider } from "@polkadot/rpc-provider";
 
 import { useContext } from "react";
 import SignerContext from "./signerContext";
+import Project from "./pages/Project";
 
 function App() {
   const routes = [
@@ -41,18 +42,25 @@ function App() {
       path: "/gettingstarted",
       element: <GettingStarted />,
     },
+    {
+      path: "/project",
+      element: <Project />,
+    },
   ];
 
   const { setSignerState } = useContext(SignerContext);
 
   const [signer, setSigner] = useState();
+  const [connecting, setConnecting] = useState(false);
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [connectedWallet, setConnectedWallet] = useState("");
+  
 
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
   const checkExtension = async () => {
-    console.log("check ex called");
+    console.log("checking reef extension");
+    setConnecting(true);
     let allInjected = await web3Enable("Reef");
 
     if (allInjected.length === 0) {
@@ -89,6 +97,8 @@ function App() {
 
       setSigner(wallet);
       setSignerState(wallet);
+      localStorage.setItem("walletConnected", true);
+      setConnecting(false);
     });
   };
 
@@ -105,10 +115,11 @@ function App() {
         checkExtension={checkExtension}
         checkSigner={checkSigner}
         connectedWallet={connectedWallet.address}
+        connecting = {connecting}
       />
       <Routes>
         {routes.map((e, index) => (
-          <Route key={index} path={e.path} element={e.element} />
+          <Route key={index} path={e.path} element={e.element}  />
         ))}
       </Routes>
       <Footer />

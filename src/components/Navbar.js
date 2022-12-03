@@ -6,7 +6,7 @@ import Uik from "@reef-defi/ui-kit";
 import { Link } from "react-router-dom";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
+const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) => {
   console.log(connectedWallet);
   return (
     <BootstrapNavbar bg="light" expand="lg">
@@ -38,7 +38,7 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
               </NavDropdown.Item>
             </NavDropdown> */}
           </Nav>
-          <Uik.Button
+          {connecting ? (<Uik.Button text='Button' loading size='large'/>) : (<Uik.Button
             text={
               connectedWallet
                 ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
@@ -47,13 +47,24 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet }) => {
                 : "Connect Wallet"
             }
             onClick={checkExtension}
-          />
+          />)}
+          {/* <Uik.Button
+            text={
+              connectedWallet
+                ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
+                  40
+                )}`
+                : "Connect Wallet"
+            }
+            onClick={checkExtension}
+          /> */}
+
           {connectedWallet ? (
             <div style={{ marginLeft: "20px" }}>
               {" "}
-              {/* <Link to={"/editprofile"}> */}
+              <Link to={"/editprofile"}>
               <Uik.Button icon={faCog} size="large" />
-              {/* </Link> */}
+              </Link>
             </div>
           ) : (
             ""

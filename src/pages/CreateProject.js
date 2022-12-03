@@ -17,6 +17,7 @@ const CreateProject = () => {
   const [data, setData] = useState({
     name: "",
     budget: "",
+    deadline: 0,
     desc: "",
   });
   const FactoryAbi = ProjectFactory.abi;
@@ -84,27 +85,38 @@ const CreateProject = () => {
 
   const createProject = async (e) => {
     e.preventDefault();
-    const res = await uploadFileToIPFS(files);
-    console.log({ res });
-    // const res = ;
-    // console.log({ im: res });
+    const date = new Date(data.deadline);
+    console.log(date.getTime());
+    const deadlinInSec = date.getTime() * 1000;
+    const imageFiles = await uploadFileToIPFS(files);
 
-    // const budget = ethers.utils.parseEther(data.budget);
-    // await checkSigner();
-    // if (!signerState) return alert("Please Connect your wallet first");
-    // const contract = new Contract(
-    //   factoryContractAddress,
-    //   FactoryAbi,
-    //   signerState
-    // );
-    // const result = await contract.createProject(
-    //   data.name,
-    //   data.desc,
-    //   [""],
-    //   "12312",
-    //   { value: budget }
-    // );
-    // console.log(result);
+    const budget = ethers.utils.parseEther(data.budget);
+    await checkSigner();
+    if (!signerState) return alert("Please Connect your wallet first");
+    const contract = new Contract(
+      factoryContractAddress,
+      FactoryAbi,
+      signerState
+    );
+
+    let contractData = {
+      name: data.name,
+      desc: data.desc,
+      image: imageFiles,
+      deadline: deadlinInSec.toString(),
+      value: budget.toString(),
+    };
+
+    console.log({ contractData });
+    const result = await contract.createProject(
+      data.name,
+      data.desc,
+      imageFiles,
+      deadlinInSec.toString(),
+      { value: budget.toString() }
+    );
+    const projects = await contract.getDeployedProjects();
+    console.log({ projects });
   };
 
   return (
@@ -125,7 +137,12 @@ const CreateProject = () => {
                 label="Budget (In REEF)"
                 placeholder="Eg : 10000"
               />
-              <Uik.Input type="date" label="Deadline" />
+              <Uik.Input
+                type="date"
+                label="Deadline"
+                name="deadline"
+                onChange={onChange}
+              />
             </Uik.Container>
             <Uik.Input
               onChange={onChange}

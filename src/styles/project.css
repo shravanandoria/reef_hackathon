@@ -1,0 +1,19 @@
+
+.fontCustom{
+    font-size:28px;
+    text-align: start;
+    margin: 12px 2px;
+}
+
+.title{
+    font-size: 18px;
+    margin: 12px 2px;
+}
+.applyBtn{
+    margin-right: 15px;
+}
+
+.btndiv{
+    display: flex ;
+    margin: 15px 2px;
+}

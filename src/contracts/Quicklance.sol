@@ -30,7 +30,7 @@ contract ProjectFactory {
     function createProject(
         string memory _projectName,
         string memory _projectDesc,
-        bytes[] memory _images,
+        string[] memory _images,
         uint256 _deadline
     ) public payable {
         uint256 projectId = projectCount.current();
@@ -57,7 +57,7 @@ contract ProjectFactory {
     }
 
     //Get All Deployed Projects
-    function getDeployedProjects() private view returns (ProjectInfo[] memory) {
+    function getDeployedProjects() public view returns (ProjectInfo[] memory) {
         uint256 projectId = projectCount.current();
         ProjectInfo[] memory items = new ProjectInfo[](projectId);
         uint256 currentIndex = 0;
