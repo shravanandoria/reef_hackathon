@@ -41,7 +41,7 @@ const ActiveProjects = () => {
       url: "http://localhost/project/getprojects",
       method: "get",
     });
-    console.log(res.data);
+    console.log({res: res.data});
     setData(res.data);
   };
 

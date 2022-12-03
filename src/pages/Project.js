@@ -7,10 +7,8 @@ import ethindia from '../assets/ethindia.png'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
-
+import Table from 'react-bootstrap/Table';
 import "swiper/swiper-bundle.min.css";
-// import "swiper/swiper-bundle.min.css/free-mode";
-// import "swiper/swiper-bundle.min.css/pagination";
 
 import { FreeMode, Pagination } from "swiper";
 const Project = () => {
@@ -73,16 +71,40 @@ const Project = () => {
         <div className='btndiv'>
           <Uik.Button text='Apply' onClick={handleShow} success className='applyBtn' />
           <Uik.Tooltip text='Coming Soon..' position='right'>
-            {!show && <Button onClick={() => setShow(true)} className='applyBtn'>See Message</Button>}
+            {!show && <Button onClick={() => setShow(true)} className='applyBtn'>See Proposals</Button>}
             <Uik.Button text='Chat' />
           </Uik.Tooltip>
         </div>
 
         <Alert show={show} variant="success">
-          <Alert.Heading>Important Message !</Alert.Heading>
-          <p>
-            Please make a reliable request for the project, the requester of this project will definitely select the best deal :
-          </p>
+          <Alert.Heading>Exisiting Proposals from other freelancers</Alert.Heading>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Coatation</th>
+                <th>Summary</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>0.5</td>
+                <td>Talkingg</td>
+                <td>  <Uik.Button text='Accept Proposal' size='small' success /></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>0.8</td>
+                <td>Talkingg</td>
+                <td>  <Uik.Button text='Accept Proposal' size='small' success/></td>
+              </tr>
+            </tbody>
+          </Table>
           <hr />
           <div className="d-flex justify-content-end">
             <Button onClick={() => setShow(false)} variant="outline-success">
@@ -90,7 +112,6 @@ const Project = () => {
             </Button>
           </div>
         </Alert>
-
 
         <Uik.Text className='textDivProj' text='Other Related Images' />
         <div className='ImageDiv'>
