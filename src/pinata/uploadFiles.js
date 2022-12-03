@@ -7,10 +7,10 @@ const keys = {
   secret: "45a5b65ef92291b54bd02c781daac7d14f0967ae4d9f42c29ae23b0947b30d3b",
 };
 
-export const uploadFileToIPFS = (files) => {
-  // const baseURL = "https://gateway.pinata.cloud/ipfs/";
+export const uploadFileToIPFS = async (files) => {
   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
   let imgUrl = [];
+
   try {
     Array.from(files).forEach(async (file) => {
       let data = new FormData();
@@ -34,7 +34,9 @@ export const uploadFileToIPFS = (files) => {
       });
       const imgLink = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
       imgUrl.push(imgLink);
+      console.log({ imgLink });
     });
+    console.log(imgUrl);
     return imgUrl;
   } catch (error) {
     return {

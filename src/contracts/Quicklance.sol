@@ -12,7 +12,6 @@ contract ProjectFactory {
         string projectDesc;
         uint256 budget;
         bool isComplete;
-        string[3] images;
         uint256 date;
         uint256 deadline;
         address payable _owner;
@@ -30,7 +29,6 @@ contract ProjectFactory {
     function createProject(
         string memory _projectName,
         string memory _projectDesc,
-        string[] memory _images,
         uint256 _deadline
     ) public payable {
         uint256 projectId = projectCount.current();
@@ -42,7 +40,6 @@ contract ProjectFactory {
             _projectDesc,
             address(this).balance,
             false,
-            _images,
             block.timestamp,
             _deadline,
             payable(msg.sender),
