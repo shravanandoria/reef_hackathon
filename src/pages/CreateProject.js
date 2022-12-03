@@ -16,6 +16,7 @@ const CreateProject = () => {
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
   const [images, setImages] = useState([]);
+
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -96,7 +97,7 @@ const CreateProject = () => {
         method: "post",
         data: {
           wallet: address.address,
-          data,
+          ...data,
           files: images,
           date: Date.now(),
         },
