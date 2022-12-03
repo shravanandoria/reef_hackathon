@@ -21,13 +21,13 @@ const Homepage = () => {
         <div>
           <Uik.Text text="Find The Best Work For You!" type="headline" />
           <Uik.Text text="Request | Work | Earn" type="headline" />
-          <Uik.Text className='normalText' text="Choose your direction and let's start!!" type="light" />
+          <Uik.Text className='normalText' text="Choose your direction and get started!!" type="light" />
           <div className='ButtonContainer'>
             <Link to={"/createproject"} className="TextStyleCustom">
-              <Uik.Button className='btn1' text='Quick Project' fill />
+              <Uik.Button className='btn1' text='Request Project' fill />
             </Link>
-            <Link to={"/gettingstarted"} className="TextStyleCustom">
-              <Uik.Button text='Get Started' success />
+            <Link to={"/activeprojects"} className="TextStyleCustom">
+              <Uik.Button text='Get Project' success />
             </Link>
           </div>
         </div>

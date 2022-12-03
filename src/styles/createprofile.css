@@ -1,0 +1,18 @@
+.inputProfile{
+    margin: 3px 2px 14px 2px;
+}
+
+.labelInt{
+    margin-top: 14px;
+}
+
+.emailInt{
+    margin-bottom: 12px;
+}
+
+.popupAlert{
+    position: absolute;
+    right: 35%;
+    bottom: 50%;
+    background-color: red;
+}

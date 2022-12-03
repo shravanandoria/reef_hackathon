@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
-import "../styles/activeprojects.css"
 import reef from '../assets/reef.png'
-import ethindia from '../assets/ethindia.png'
-import dapp from '../assets/dapp.png'
 import Uik from '@reef-defi/ui-kit';
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import SignerContext from "../signerContext";
@@ -13,6 +10,8 @@ import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import "../styles/activeprojects.css"
 
 const ActiveProjects = () => {
 
@@ -91,8 +90,8 @@ const ActiveProjects = () => {
 
 
     return (
-        <CardGroup className='cardDesign'>
-            <Card className='cardDiv'>
+        <div className='cardDesign'>
+            <Card style={{ margin: "15px 40px", maxWidth: "400px" }}>
                 <Card.Img variant="top" src={reef} style={{ maxHeight: "320px", width: "auto" }} />
                 <Card.Body>
                     <Card.Title>Integrate web3.js library in Reef Dapp</Card.Title>
@@ -101,56 +100,82 @@ const ActiveProjects = () => {
 
                         This would be an HMTL web page requesting user payment in USDT or Reef, user will initiate payment from their wallet and coins will be transferred to the smart contract.
                     </Card.Text>
-                    <Link to={"/project"} style={{textDecoration:"none"}}>
-                    <Uik.Button
-                        fill
-                        text='View Project'
-                        size='large'
-                    />
+                    <Link to={"/project"} style={{ textDecoration: "none" }}>
+                        <Uik.Button
+                            fill
+                            text='View Project'
+                            size='large'
+                        />
                     </Link>
                 </Card.Body>
                 <Card.Footer>
                     <small className="text-muted">Project Request on 25 November, 2022</small>
                 </Card.Footer>
             </Card>
-            <Card className='cardDiv'>
-                <Card.Img variant="top" src={ethindia} style={{ maxHeight: "320px", width: "auto" }} />
+            <Card style={{ margin: "15px 40px", maxWidth: "400px" }}>
+                <Card.Img variant="top" src={reef} style={{ maxHeight: "320px", width: "auto" }} />
                 <Card.Body>
-                    <Card.Title>ETH India Website</Card.Title>
+                    <Card.Title>Integrate web3.js library in Reef Dapp</Card.Title>
                     <Card.Text>
-                        Want to create official website for ETH india event | Need a freelancer with good experience
+                        Hi, We are looking for a developer to integrate web3.js library to connect to a smart contract.
+
+                        This would be an HMTL web page requesting user payment in USDT or Reef, user will initiate payment from their wallet and coins will be transferred to the smart contract.
                     </Card.Text>
-                    <Uik.Button
-                        fill
-                        text='View Project'
-                        size='large'
-                        onClick={() => Uik.notify.info('Viewing project page is currently disabled')}
-                    />
+                    <Link to={"/project"} style={{ textDecoration: "none" }}>
+                        <Uik.Button
+                            fill
+                            text='View Project'
+                            size='large'
+                        />
+                    </Link>
                 </Card.Body>
                 <Card.Footer>
-                    <small className="text-muted">Project Request on 24 November, 2022</small>
+                    <small className="text-muted">Project Request on 25 November, 2022</small>
                 </Card.Footer>
             </Card>
-            <Card className='cardDiv'>
-                <Card.Img variant="top" src={dapp} style={{ maxHeight: "320px", width: "auto" }} />
+            <Card style={{ margin: "15px 40px", maxWidth: "400px" }}>
+                <Card.Img variant="top" src={reef} style={{ maxHeight: "320px", width: "auto" }} />
                 <Card.Body>
-                    <Card.Title>Crypto Exchange Website</Card.Title>
+                    <Card.Title>Integrate web3.js library in Reef Dapp</Card.Title>
                     <Card.Text>
-                        Hello, we are a low-budget startup We want to create a  USDT to USD (FIAT) exchange for the local market. The website should be written in React/Next.js (front)
-                        The idea is simple, we need a landing page where the course will be calculated easily ( USD- GEL course)
+                        Hi, We are looking for a developer to integrate web3.js library to connect to a smart contract.
+
+                        This would be an HMTL web page requesting user payment in USDT or Reef, user will initiate payment from their wallet and coins will be transferred to the smart contract.
                     </Card.Text>
-                    <Uik.Button
-                        fill
-                        text='View Project'
-                        size='large'
-                        onClick={() => Uik.notify.info('Viewing project page is currently disabled')}
-                    />
+                    <Link to={"/project"} style={{ textDecoration: "none" }}>
+                        <Uik.Button
+                            fill
+                            text='View Project'
+                            size='large'
+                        />
+                    </Link>
                 </Card.Body>
                 <Card.Footer>
-                    <small className="text-muted">Project Request on 26 November, 2022</small>
+                    <small className="text-muted">Project Request on 25 November, 2022</small>
                 </Card.Footer>
             </Card>
-        </CardGroup>
+            <Card style={{ margin: "15px 40px", maxWidth: "400px" }}>
+                <Card.Img variant="top" src={reef} style={{ maxHeight: "320px", width: "auto" }} />
+                <Card.Body>
+                    <Card.Title>Integrate web3.js library in Reef Dapp</Card.Title>
+                    <Card.Text>
+                        Hi, We are looking for a developer to integrate web3.js library to connect to a smart contract.
+
+                        This would be an HMTL web page requesting user payment in USDT or Reef, user will initiate payment from their wallet and coins will be transferred to the smart contract.
+                    </Card.Text>
+                    <Link to={"/project"} style={{ textDecoration: "none" }}>
+                        <Uik.Button
+                            fill
+                            text='View Project'
+                            size='large'
+                        />
+                    </Link>
+                </Card.Body>
+                <Card.Footer>
+                    <small className="text-muted">Project Request on 25 November, 2022</small>
+                </Card.Footer>
+            </Card>
+        </div>
     )
 }
 
