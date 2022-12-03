@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Uik from '@reef-defi/ui-kit'
@@ -8,10 +8,33 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import "swiper/swiper-bundle.min.css";
 
 import { FreeMode, Pagination } from "swiper";
 const Project = () => {
+
+  const { id } = useParams();
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    deadline: "",
+    budget: "",
+    files: "",
+    owner: "",
+    date: "",
+  });
+
+  const fetchProject = async () => {
+    const res = await axios({
+      url: `http://localhost/project/getprojectsByOwner/${id}`,
+      method: "get",
+    });
+    setData(res.data);
+  };
+
   const [show, setShow] = useState(false);
   const [apply, setApply] = useState(false);
   const [value, setValue] = useState("")
@@ -24,6 +47,10 @@ const Project = () => {
   };
   const handleShow = () => setApply(true);
 
+  useEffect(() => {
+    fetchProject();
+  }, []);
+
   return (
     <>
       <Uik.Card title='' condensed>
@@ -31,18 +58,22 @@ const Project = () => {
           <div className='divTextArea'>
             <Uik.Text
               className="fontCustom"
-              text="Integrate web3.js library in Reef Dapp"
+              text={data.title}
               type="headline"
             />
 
             <div className='labelDiv'>
-              <div style={{ marginRight: "20px" }}>
+              <div style={{ marginRight: "25px" }}>
                 <Uik.Label text='Published On' className='labelText' />
                 <Uik.Tag color="purple" text="25 November, 2022" />
               </div>
-              <div>
+              <div style={{ marginRight: "25px" }}>
                 <Uik.Label text='Project Deadline' className='labelText' />
                 <Uik.Tag color="yellow" text="21 November, 2022" />
+              </div>
+              <div>
+                <Uik.Label text='Project Budget' className='labelText' />
+                <Uik.ReefAmount value={2555} />
               </div>
             </div>
 
@@ -92,7 +123,7 @@ const Project = () => {
               <tr>
                 <td>1</td>
                 <td>Mark</td>
-                <td>0.5</td>
+                <td>2300</td>
                 <td>Talkingg</td>
                 <td>  <Uik.Button text='Accept Proposal' size='small' success /></td>
               </tr>
@@ -101,7 +132,7 @@ const Project = () => {
                 <td>Jacob</td>
                 <td>0.8</td>
                 <td>Talkingg</td>
-                <td>  <Uik.Button text='Accept Proposal' size='small' success/></td>
+                <td>  <Uik.Button text='Accept Proposal' size='small' success /></td>
               </tr>
             </tbody>
           </Table>

@@ -47,10 +47,6 @@ function App() {
       element: <GettingStarted />,
     },
     {
-      path: "/project",
-      element: <Project />,
-    },
-    {
       path: "/createprofile",
       element: <CreateProfile />,
     },
@@ -60,7 +56,7 @@ function App() {
     },
     {
       path: "/project/:id",
-      element: <ProjectPage />,
+      element: <Project />,
     },
   ];
 

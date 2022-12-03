@@ -101,13 +101,6 @@ const ActiveProjects = () => {
     fetchProjects();
   }, []);
 
-  // const fetchProjects = async () =>{
-  //     await checkSigner();
-  // if (!signerState) return alert("Please Connect your wallet first");
-  //     const projects = await contract.getDeployedProjects();
-  //     console.log({ projects });
-  // }
-
   return (
     <CardGroup className="cardDesign">
       {data.map((e, index) => {
@@ -130,7 +123,7 @@ const ActiveProjects = () => {
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">
-                    Project Request on 25 November, 2022
+                    Project Request on {e.date}
                   </small>
                 </Card.Footer>
               </Card>

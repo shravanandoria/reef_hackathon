@@ -35,7 +35,6 @@ const CreateProfile = () => {
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
 
   const uploadFileToIPFS = async (file) => {
@@ -111,7 +110,6 @@ const CreateProfile = () => {
       console.log({ res: res.data });
       setIsLoading(false);
       handleShow();
-      navigate("/");
     } catch (error) {
       console.log(error);
     }
