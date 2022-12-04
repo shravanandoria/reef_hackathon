@@ -4,6 +4,9 @@ import Button from "react-bootstrap/Button";
 import Uik from "@reef-defi/ui-kit";
 import "../styles/project.css";
 import ethindia from "../assets/ethindia.png";
+import reef from "../assets/reef.png";
+import dapp from "../assets/dapp.png";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
