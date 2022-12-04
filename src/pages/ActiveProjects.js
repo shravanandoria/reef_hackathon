@@ -39,15 +39,6 @@ const ActiveProjects = () => {
     },
   ]);
 
-  // const fetchProjects = async () => {
-  //   const res = await axios({
-  //     url: "http://localhost/project/getprojects",
-  //     method: "get",
-  //   });
-  //   setData(res.data);
-  //   getOwnerData(res.data.owner);
-  // };
-
   const getOwnerData = async (ownerId) => {
     const response = await axios({
       url: `http://localhost/auth/getuser`,
@@ -84,12 +75,7 @@ const ActiveProjects = () => {
 
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
 
-      // Claim default account
       if (!(await wallet.isClaimed())) {
-        // console.log(
-        //   "No claimed EVM account found -> claimed default EVM account: ",
-        //   await wallet.getAddress()
-        // );
         await wallet.claimDefaultAccount();
       }
 

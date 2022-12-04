@@ -9,7 +9,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) => {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
   return (
     <BootstrapNavbar bg="light" expand="lg">
       <Container>
@@ -27,18 +27,7 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) =>
             <Link to={"/gettingstarted"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Getting Started</Link>
             <Link to={"/freelancers"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Freelancers</Link>
             <Link to={"/activeprojects"} className="headStyle2" style={{ textDecoration: "none", color: "#19233c", padding: "6px" }}>Active Projects</Link>
-            {/* nav drop down  */}
-            {/* <NavDropdown title="Categories" id="basic-nav-dropdown">
-              <NavDropdown.Item href={"/activeprojects"}>
-                Web2 Websites
-              </NavDropdown.Item>
-              <NavDropdown.Item href={"/activeprojects"}>
-                web3 Websites
-              </NavDropdown.Item>
-              <NavDropdown.Item href={"/activeprojects"}>
-                Mobile Apps
-              </NavDropdown.Item>
-            </NavDropdown> */}
+          
           </Nav>
           {connecting ? (<Uik.Button text='Button' loading size='large' />) : (<Uik.Button
             text={
@@ -50,16 +39,6 @@ const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) =>
             }
             onClick={checkExtension}
           />)}
-          {/* <Uik.Button
-            text={
-              connectedWallet
-                ? `${connectedWallet.slice(0, 2)} .... ${connectedWallet.slice(
-                  40
-                )}`
-                : "Connect Wallet"
-            }
-            onClick={checkExtension}
-          /> */}
 
           {connectedWallet ? (
             <div style={{ marginLeft: "20px" }}>
