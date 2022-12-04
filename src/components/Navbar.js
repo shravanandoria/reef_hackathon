@@ -9,7 +9,6 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const Navbar = ({ checkExtension, checkSigner, connectedWallet, connecting }) => {
-  // console.log(connectedWallet);
   const [isOpen, setOpen] = useState(false)
   return (
     <BootstrapNavbar bg="light" expand="lg">

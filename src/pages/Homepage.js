@@ -13,7 +13,6 @@ import reef from "../assets/reef.png";
 
 const Homepage = () => {
   const openPage = () => {
-    console.log("check");
   };
   return (
     <>

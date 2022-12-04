@@ -19,7 +19,6 @@ const ProjectPage = () => {
       url: `http://localhost/project/getprojectsByOwner/${id}`,
       method: "get",
     });
-    console.log(res.data);
     setData(res.data);
   };
 

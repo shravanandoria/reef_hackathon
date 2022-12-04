@@ -18,32 +18,33 @@ const ActiveProjects = () => {
   const [signer, setSigner] = useState();
   const FactoryAbi = ProjectFactory.abi;
   const factoryContractAddress = ProjectFactory.address;
-  const { signerState } = useContext(SignerContext);
+  const { signerState, address } = useContext(SignerContext);
   const [usernameMain, setUsernameMain] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [sample, setSample] = useState([]);
   const [data, setData] = useState([
     {
       title: "",
       description: "",
       deadline: "",
       budget: "",
-      files: "",
+      images: "",
       owner: "",
       date: "",
     },
   ]);
 
-  const fetchProjects = async () => {
-    const res = await axios({
-      url: "http://localhost/project/getprojects",
-      method: "get",
-    });
-    console.log({ res: res.data });
-    setData(res.data);
-    getOwnerData(res.data.owner);
-  };
+  // const fetchProjects = async () => {
+  //   const res = await axios({
+  //     url: "http://localhost/project/getprojects",
+  //     method: "get",
+  //   });
+  //   setData(res.data);
+  //   getOwnerData(res.data.owner);
+  // };
 
   const getOwnerData = async (ownerId) => {
     const response = await axios({
@@ -56,11 +57,9 @@ const ActiveProjects = () => {
     const { username, profileImage } = response.data;
     setUsernameMain(username);
     setProfileImage(profileImage);
-    console.log({ ownerInfo: response.data });
   };
 
   const checkExtension = async () => {
-    console.log("check ex called");
     let allInjected = await web3Enable("Reef");
 
     if (allInjected.length === 0) {
@@ -81,16 +80,14 @@ const ActiveProjects = () => {
 
       allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
 
-      console.log(allAccounts);
-
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
 
       // Claim default account
       if (!(await wallet.isClaimed())) {
-        console.log(
-          "No claimed EVM account found -> claimed default EVM account: ",
-          await wallet.getAddress()
-        );
+        // console.log(
+        //   "No claimed EVM account found -> claimed default EVM account: ",
+        //   await wallet.getAddress()
+        // );
         await wallet.claimDefaultAccount();
       }
 
@@ -105,76 +102,94 @@ const ActiveProjects = () => {
     return true;
   };
 
+  const fetchProjects = async () => {
+    setIsLoading(true);
+    if (!address.address) return;
+    // await checkSigner();
+    const factoryContract = new Contract(
+      factoryContractAddress,
+      FactoryAbi,
+      signerState
+    );
+    const res = await factoryContract.getDeployedProjects();
+    const { projectTitle, projectDesc } = res;
+    console.log(res);
+    setSample(res);
+    console.log({ projectTitle, projectDesc });
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
 
   return (
     <div className="cardDesign">
-      {data.map((e, index) => {
-        // console.log(e.files[0]);
-        return (
-          <>
-            <Link className="linkDesign">
-              <Card
-                className="cardDiv"
-                style={{
-                  textDecoration: "none",
-                  margin: "5px 30px",
-                  width: "360px",
-                }}
-                key={index}
-              >
-                <Card.Img
-                  variant="top"
-                  src={e.files[0]}
-                  style={{ maxHeight: "220px", width: "auto" }}
-                />
-                <Card.Body>
-                  <Card.Title>{e.title}</Card.Title>
-                  <Card.Text>{e.description}</Card.Text>
-                  <div style={{ display: "flex" }}>
-                    <Link
-                      to={`/project/${e._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Uik.Button
-                        fill
-                        text="View Project"
-                        size="large"
-                        className="btnProjectt"
-                      />
-                    </Link>
+      {sample &&
+        sample.map((e, index) => {
+          // console.log(e.files[0]);
+          return (
+            <>
+              <Link className="linkDesign" key={index}>
+                <Card
+                  className="cardDiv"
+                  style={{
+                    textDecoration: "none",
+                    margin: "5px 30px",
+                    width: "360px",
+                  }}
+                  key={index}
+                >
+                  <Card.Img
+                    variant="top"
+                    src={e.image}
+                    style={{ maxHeight: "220px", width: "auto" }}
+                  />
+                  <Card.Body>
+                    <Card.Title>{e.projectTitle}</Card.Title>
+                    <Card.Text>{e.projectDesc}</Card.Text>
                     <div style={{ display: "flex" }}>
-                      <Uik.Label text="Requested By" className="labeluser" />
-                      <Uik.Avatar
-                        name={usernameMain}
-                        image={profileImage}
-                        size="small"
-                      />
+                      <Link
+                        to={`/project/${e.projectId.toString()}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Uik.Button
+                          fill
+                          text="View Project"
+                          size="large"
+                          className="btnProjectt"
+                        />
+                      </Link>
+                      <div style={{ display: "flex" }}>
+                        <Uik.Label text="Requested By" className="labeluser" />
+                        <Uik.Avatar
+                          name={usernameMain}
+                          image={profileImage}
+                          size="small"
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Card.Body>
-                <Card.Footer>
-                  <small className="text-muted" style={{ display: "flex" }}>
-                    <Uik.Tooltip
-                      text="Deadline"
-                      position="right"
-                      className="tooltipBox"
-                    >
-                      <Uik.Button text={e.deadline} />
-                    </Uik.Tooltip>
-                    <div className="budgetDesign">
-                      <Uik.Label text="Budget" className="budgetIn" />
-                    </div>
-                    <Uik.ReefAmount value={e.budget} />
-                  </small>
-                </Card.Footer>
-              </Card>
-            </Link>
-          </>
-        );
-      })}
+                  </Card.Body>
+                  <Card.Footer>
+                    <small className="text-muted" style={{ display: "flex" }}>
+                      <Uik.Tooltip
+                        text="Deadline"
+                        position="right"
+                        className="tooltipBox"
+                      >
+                        <Uik.Button text={e.deadline} />
+                      </Uik.Tooltip>
+                      <div className="budgetDesign">
+                        <Uik.Label text="Budget" className="budgetIn" />
+                      </div>
+                      <Uik.ReefAmount value={e.budget} />
+                    </small>
+                  </Card.Footer>
+                </Card>
+              </Link>
+            </>
+          );
+        })}
     </div>
   );
 };
