@@ -18,7 +18,7 @@ const Freelancers = () => {
                 <Uik.Text text="Freelancers" type="headline" />
             </div>
             <div className='cardsDiv'>
-                <Card style={{ width: '18rem', marginRight: '40px' }}>
+                <Card style={{ width: '18rem', marginRight: '40px', marginTop:"7px", marginBottom:"7px" }}>
                     <Card.Img variant="top" src={apeximg} />
                     <Uik.Avatar
                         image={ani}
@@ -39,7 +39,7 @@ const Freelancers = () => {
                     </Card.Body>
                 </Card>
 
-                <Card style={{ width: '18rem', marginRight: '40px' }}>
+                <Card style={{ width: '18rem', marginRight: '40px', marginTop:"7px", marginBottom:"7px"  }}>
                     <Card.Img variant="top" src={bgmi} />
                     <Uik.Avatar
                         image={shravan}
@@ -60,7 +60,7 @@ const Freelancers = () => {
                     </Card.Body>
                 </Card>
 
-                <Card style={{ width: '18rem', marginRight: '40px' }}>
+                <Card style={{ width: '18rem', marginRight: '40px', marginTop:"7px", marginBottom:"7px"  }}>
                     <Card.Img variant="top" src={darshan} />
                     <Uik.Avatar
                         image={darshan}
@@ -81,7 +81,7 @@ const Freelancers = () => {
                     </Card.Body>
                 </Card>
 
-                <Card style={{ width: '18rem', marginRight: '40px' }}>
+                <Card style={{ width: '18rem', marginRight: '40px', marginTop:"7px", marginBottom:"7px"  }}>
                     <Card.Img variant="top" src={suchit} />
                     <Uik.Avatar
                         image={suchit}

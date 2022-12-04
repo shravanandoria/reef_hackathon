@@ -4,6 +4,9 @@ import Button from "react-bootstrap/Button";
 import Uik from "@reef-defi/ui-kit";
 import "../styles/project.css";
 import ethindia from "../assets/ethindia.png";
+import reef from "../assets/reef.png";
+import dapp from "../assets/dapp.png";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
@@ -13,7 +16,7 @@ import axios from "axios";
 import SignerContext from "../signerContext";
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import { Contract } from "ethers";
-// import "swiper/swiper-bundle.min.css";
+import "swiper/swiper-bundle.min.css";
 
 import { FreeMode, Pagination } from "swiper";
 const Project = () => {
@@ -96,7 +99,7 @@ const Project = () => {
                 <div className="labelDiv">
                   <div style={{ marginRight: "25px" }}>
                     <Uik.Label text="Published On" className="labelText" />
-                    <Uik.Tag color="purple" text={data.date} />
+                    <Uik.Tag color="purple" text={"2021-11-12"} />
                   </div>
                   <div style={{ marginRight: "25px" }}>
                     <Uik.Label text="Project Deadline" className="labelText" />
@@ -111,8 +114,8 @@ const Project = () => {
                   <Uik.Label text="Requested By" className="userText" />
                   <Link to={"/profile"} style={{ textDecoration: "none" }}>
                     <Uik.Avatar
-                      name={usernameMain}
-                      image={profileImage}
+                      name={"Shravan"}
+                      image={reef}
                       className="avatarTest"
                     />
                   </Link>

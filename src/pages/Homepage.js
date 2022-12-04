@@ -43,7 +43,7 @@ const Homepage = () => {
         <Uik.Text text="Active Projects" type="headline" />
       </div>
       <CardGroup className="cardDesign">
-        <Card className="cardDiv">
+        <Card className="cardDiv" style={{margin:"2px 10px"}}>
           <Card.Img
             variant="top"
             src={reef}
@@ -73,7 +73,7 @@ const Homepage = () => {
             </small>
           </Card.Footer>
         </Card>
-        <Card className="cardDiv">
+        <Card className="cardDiv" style={{margin:"2px 10px"}}>
           <Card.Img
             variant="top"
             src={ethindia}
@@ -83,7 +83,7 @@ const Homepage = () => {
             <Card.Title>ETH India Website</Card.Title>
             <Card.Text>
               Want to create official website for ETH india event | Need a
-              freelancer with good experience
+              freelancer with good experience, need this website done very quickly and in best way
             </Card.Text>
             <Uik.Button
               fill
@@ -100,7 +100,7 @@ const Homepage = () => {
             </small>
           </Card.Footer>
         </Card>
-        <Card className="cardDiv">
+        <Card className="cardDiv" style={{margin:"2px 10px"}}>
           <Card.Img
             variant="top"
             src={dapp}

@@ -10,6 +10,8 @@ import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import reef from "../assets/reef.png";
+
 import Button from "react-bootstrap/Button";
 
 const ActiveProjects = () => {
@@ -163,8 +165,8 @@ const ActiveProjects = () => {
                       <div style={{ display: "flex" }}>
                         <Uik.Label text="Requested By" className="labeluser" />
                         <Uik.Avatar
-                          name={usernameMain}
-                          image={profileImage}
+                          name={"Shravan"}
+                          image={reef}
                           size="small"
                         />
                       </div>

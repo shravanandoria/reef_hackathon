@@ -215,7 +215,6 @@ const CreateProject = () => {
           <input
             type="file"
             name="files"
-            multiple="multiple"
             placeholder="input files"
             className="filesInt"
             onChange={onChageFileSave}
