@@ -122,7 +122,7 @@ const Project = () => {
                 </div>
                 <Uik.Text
                   className="title titleProject"
-                  text={data.description}
+                  text={data.projectDesc}
                   type="title"
                 />
               </div>
