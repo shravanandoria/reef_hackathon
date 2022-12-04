@@ -19,6 +19,7 @@ const ProjectPage = () => {
       url: `http://localhost/project/getprojectsByOwner/${id}`,
       method: "get",
     });
+    console.log(res.data);
     setData(res.data);
   };
 
@@ -27,7 +28,7 @@ const ProjectPage = () => {
   }, []);
   return (
     <div>
-      <h1> {data.title}</h1>
+      <h1> </h1>
     </div>
   );
 };

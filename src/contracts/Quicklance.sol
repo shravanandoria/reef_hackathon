@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract ProjectFactory {
+contract ProjectFacroty {
+
     using Counters for Counters.Counter;
+    Counters.Counter public projectCount;
+    mapping(uint256 => ProjectInfo) public projects;
 
     struct ProjectInfo {
         uint256 projectId;
-        string projectName;
+        string projectTitle;
         string projectDesc;
         uint256 budget;
         bool isComplete;
@@ -16,70 +20,56 @@ contract ProjectFactory {
         uint256 deadline;
         address payable _owner;
         address payable freelancer;
-        uint256 votes;
         Project project;
     }
-    
-    mapping(uint256 => ProjectInfo) public projects;
-    mapping(uint256 => Project) public projectAddresses;
-    mapping(address => bool) public hasVoted;
-    Counters.Counter private projectCount;
-    Project private deployedProject;
 
     function createProject(
-        string memory _projectName,
-        string memory _projectDesc,
+        string memory _title,
+        string memory _desc,
+        uint256 _budget,
         uint256 _deadline
     ) public payable {
+        require(msg.value > 0, "transfer more than 0 tokens");
         uint256 projectId = projectCount.current();
-        require(msg.value > 0, "Please transfer the budget amount");
-        Project newProject = Project(payable(msg.sender));
+        Project  newProject = new Project(payable(msg.sender));
         ProjectInfo memory project = ProjectInfo(
             projectId,
-            _projectName,
-            _projectDesc,
-            address(this).balance,
+            _title,
+            _desc,
+            _budget,
             false,
             block.timestamp,
             _deadline,
             payable(msg.sender),
             payable(address(0)),
-            0,
             newProject
         );
-        projects[projectId] = project;
-        projectAddresses[projectId] = newProject;
+
         payable(address(newProject)).transfer(address(this).balance);
+        projects[projectId] = project;
         projectCount.increment();
     }
 
-    //Get All Deployed Projects
     function getDeployedProjects() public view returns (ProjectInfo[] memory) {
-        uint256 projectId = projectCount.current();
-        ProjectInfo[] memory items = new ProjectInfo[](projectId);
+        uint256 projectCount = projectCount.current();
+        ProjectInfo[] memory items = new ProjectInfo[](projectCount);
         uint256 currentIndex = 0;
 
-        for (uint256 i = 0; i < projectId; i++) {
+        for(uint256 i = 0; i < projectCount; i++){
             ProjectInfo storage currentItem = projects[i];
             items[currentIndex] = currentItem;
             currentIndex++;
         }
-
         return items;
     }
 
-    // Get Deployed Proejcts by owner
-    function getDeployedProjectByOwner()
-        public
-        view
-        returns (ProjectInfo[] memory)
-    {
-        uint256 projectId = projectCount.current();
-        ProjectInfo[] memory items = new ProjectInfo[](projectId);
+    function deployedProjectsByOwner() public view returns (ProjectInfo[] memory) {
+        uint256 projectCount = projectCount.current();
+        ProjectInfo[] memory items = new ProjectInfo[](projectCount);
         uint256 currentIndex = 0;
 
-        for (uint256 i = 0; i < projectId; i++) {
-            if (projects[i]._owner == msg.sender) {
+        for(uint256 i = 0; i < projectCount; i++) {
+            if(projects[i]._owner == msg.sender){
                 ProjectInfo storage currentItem = projects[i];
                 items[currentIndex] = currentItem;
                 currentIndex++;
@@ -88,105 +78,80 @@ contract ProjectFactory {
         return items;
     }
 
-    function upVote(uint256 _id) public virtual {
-        ProjectInfo memory project = projects[_id];
-        require(
-            msg.sender == project._owner || msg.sender == project.freelancer,
-            "You have no role in this project"
-        );
-        require(!hasVoted[msg.sender], "You have already voted");
 
-        hasVoted[msg.sender] = true;
-        project.votes++;
-    }
 }
 
-contract Project is ProjectFactory {
-    using Counters for Counters.Counter;
-    Counters.Counter private _proposalCount;
-    mapping(uint256 => Proposal) public proposals;
-    mapping(address => bool) public isFinalized;
-    address payable public owner;
+contract Project {
 
-    struct Proposal {
+    using Counters for Counters.Counter;
+    Counters.Counter public proposalCount;
+    mapping(uint256 => ProposalInfo) public proposals;
+    bool public isProjectOccupied = false;
+
+    struct ProposalInfo {
+        uint256 proposalId;
         uint256 cost;
         string summary;
-        string[] images;
-        address payable _freelance;
-        bool proposalAccepted;
+        address payable freelance;
+        bool isProposalAccepted;
+        bool isProposalCompleted;
     }
+
+    address payable owner;
 
     constructor(address payable _owner) {
         owner = _owner;
     }
 
-    // Only Freelancer Owner Can Call This
-    //CREATE PROPOSALS
-    function createProposal(
-        uint256 _cost,
-        string memory _summary,
-        string[] memory _images
-    ) public payable {
-        Proposal memory proposal = Proposal(
+    function createProposal(uint256 _cost, string memory _summary) public {
+        uint256 proposalId = proposalCount.current();
+        
+        ProposalInfo memory proposal = ProposalInfo(
+            proposalId,
             _cost,
             _summary,
-            _images,
             payable(msg.sender),
+            false,
             false
         );
-        uint256 projectId = _proposalCount.current();
-        proposals[projectId] = proposal;
-        _proposalCount.increment();
+
+        proposals[proposalId] = proposal;
+        proposalCount.increment();
     }
 
-    // Only Project Owner Can Call This
-    // APPROVE PROPOSALS
-    function approveProposal(uint256 _id, address payable _freelance) private {
-        Proposal memory proposal = proposals[_id];
-        require(
-            !proposal.proposalAccepted,
-            "This proposal is aleady been accepted"
-        );
-        require(msg.sender == owner, "You are not the owner of this Project");
-        ProjectFactory.projects[_id].freelancer = _freelance;
-
-        proposal._freelance = _freelance;
-        proposal.proposalAccepted = true;
+    function approveProposal (uint256 _id) public {
+        require(msg.sender == owner, "You are not the owner of this project");
+        ProposalInfo storage proposal = proposals[_id];
+        proposal.isProposalAccepted = true;
+        isProjectOccupied = true;
     }
 
-    function finalizeProposal(uint256 _id) public {
-        Proposal memory proposal = proposals[_id];
-        require(msg.sender == owner || msg.sender == proposal._freelance);
-        require(
-            !isFinalized[msg.sender],
-            "You have already finalized this project"
-        );
+    function finalizeProject(uint256 _id) public payable {
+        require(msg.sender == owner, "You are not the owner of this project");
+        ProposalInfo memory proposal = proposals[_id];
 
-        isFinalized[msg.sender] = true;
-        ProjectFactory.projects[_id].votes++;
-        if (ProjectFactory.projects[_id].votes == 2) {
-            ProjectFactory.projects[_id].freelancer.transfer(
-                address(this).balance
-            );
+        uint256 balance = address(this).balance - proposal.cost ;
+        if(balance > 0){
+            owner.transfer(balance);
         }
+        proposal.freelance.transfer(proposal.cost);
+        proposal.isProposalCompleted = true;
     }
 
-    // GET PROPSALS
-    function getProposals() public view returns (Proposal[] memory) {
-        uint256 proposalCount = _proposalCount.current();
-        Proposal[] memory items = new Proposal[](proposalCount);
+    function getProposals() public view returns (ProposalInfo[] memory) {
+        uint256 proposalId = proposalCount.current();
+        ProposalInfo[] memory items = new ProposalInfo[](proposalId);
         uint256 currentIndex = 0;
 
-        for (uint256 i = 0; i < proposalCount; i++) {
-            Proposal storage currentItem = proposals[i];
+        for(uint256 i = 0; i < proposalId; i++){
+            ProposalInfo storage currentItem = proposals[i];
             items[currentIndex] = currentItem;
             currentIndex++;
         }
-
         return items;
     }
 
-    function getContractBalance() public view returns (uint256) {
+    function getBalance() public view returns (uint256){
         return address(this).balance;
     }
 

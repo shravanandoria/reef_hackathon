@@ -10,11 +10,10 @@ import { uploadAllFiles, uploadFileToIPFS } from "../pinata/uploadFiles";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 import "../styles/createproject.css";
-
 
 const CreateProject = () => {
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ const CreateProject = () => {
   const [signer, setSigner] = useState();
   const [files, setFiles] = useState([FileList]);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const [images, setImages] = useState([]);
 
@@ -103,15 +101,15 @@ const CreateProject = () => {
 
   const onChageFileSave = async (e) => {
     // setFiles();
-    console.log("loading true")
+    console.log("loading true");
     setIsLoading(true);
     const imageFiles = await uploadFileToIPFS(e.target.files);
     setImages(imageFiles);
-    console.log("loading false")
+    console.log("loading false");
     setIsLoading(false);
   };
 
-  const cenCreateProject = async (e) => {
+  const cenCreateProject = async (e, blockchainId) => {
     e.preventDefault();
     setIsLoading(true);
     // if (!address.address) return alert("Please connect your wallet address");
@@ -142,27 +140,38 @@ const CreateProject = () => {
     e.preventDefault();
     if (!address.address) return alert("Please connect your wallet");
     await checkSigner();
+    const parsedBudget = ethers.utils.parseEther(data.budget.toString());
     const factoryContract = new Contract(
       factoryContractAddress,
       FactoryAbi,
       signerState
     );
-    const result = await factoryContract.getDeployedProjects();
-    console.log(result);
-
+    const result = await factoryContract.createProject(
+      data.title,
+      data.description,
+      parsedBudget,
+      data.deadline,
+      { value: parsedBudget }
+    );
+    // const result = await factoryContract.getDeployedProjects();
     console.log(result);
   };
 
   return (
     <div className="mainContainer">
       <div className="FormContainer">
-        <form onSubmit={cenCreateProject}>
+        <form onSubmit={createProject}>
           <Uik.Text
             className="fontCustom"
             text="Create Your Project Request"
             type="headline"
           />
-          <Uik.Input onChange={onChange} name="title" label="Project Name" required={true} />
+          <Uik.Input
+            onChange={onChange}
+            name="title"
+            label="Project Name"
+            required={true}
+          />
           <Uik.Container className="containerStyle">
             <Uik.Input
               onChange={onChange}
@@ -187,7 +196,11 @@ const CreateProject = () => {
             textarea
           />
           <>
-            <Uik.Label text='Project Related Files (JPG/PNG)' className="labelTextt" required={true}/>
+            <Uik.Label
+              text="Project Related Files (JPG/PNG)"
+              className="labelTextt"
+              required={true}
+            />
           </>
           <input
             type="file"
@@ -197,7 +210,11 @@ const CreateProject = () => {
             className="filesInt"
             onChange={onChageFileSave}
           />
-          {isLoading ? (<Uik.Button text='Button' loading size='small' />) : (<Uik.Button text="Create" fill type="submit" />)}
+          {isLoading ? (
+            <Uik.Button text="Button" loading size="small" />
+          ) : (
+            <Uik.Button text="Create" fill type="submit" />
+          )}
         </form>
       </div>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -207,7 +224,10 @@ const CreateProject = () => {
         <Modal.Header closeButton>
           <Modal.Title>Project Request Created 😃</Modal.Title>
         </Modal.Header>
-        <Modal.Body>You have successfully requested the project, Click on close to add more projects!</Modal.Body>
+        <Modal.Body>
+          You have successfully requested the project, Click on close to add
+          more projects!
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleOpen}>
             Explore

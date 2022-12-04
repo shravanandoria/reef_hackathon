@@ -7,9 +7,8 @@ import axios from "axios";
 import { useContext } from "react";
 import SignerContext from "../signerContext";
 import { useAsyncError, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const CreateProfile = () => {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ const CreateProfile = () => {
   const handleClose = () => {
     setShow(false);
     navigate("/activeprojects");
-
   };
   const handleShow = () => setShow(true);
 
@@ -32,6 +30,10 @@ const CreateProfile = () => {
     username: "",
     email: "",
   });
+
+  useEffect(() => {
+    console.log(address);
+  }, []);
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -129,23 +131,26 @@ const CreateProfile = () => {
           <Uik.Input label="Last Name" name="lname" onChange={onChange} />
         </Uik.Container>
         <Uik.Input label="Username" name="username" onChange={onChange} />
-        <Uik.Label text='Profile Image (JPG/PNG)' className="labelInt" />
+        <Uik.Label text="Profile Image (JPG/PNG)" className="labelInt" />
         <input
           type="file"
           label="Profile Image"
           className="inputProfile"
           onChange={(e) => setFile(e.target.files[0])}
         />
-        <Uik.Input label="Email" name="email" onChange={onChange} className="emailInt" />
+        <Uik.Input
+          label="Email"
+          name="email"
+          onChange={onChange}
+          className="emailInt"
+        />
         {/* <Uik.Input label='Short Description' textarea /> */}
 
         {isLoading ? (
-          <Uik.Button text='Button' loading size='small' />
-        ) : (<Uik.Button
-          text="create"
-          fill
-          type="submit"
-        />)}
+          <Uik.Button text="Button" loading size="small" />
+        ) : (
+          <Uik.Button text="create" fill type="submit" />
+        )}
 
         {/* </Uik.Form> */}
       </form>
@@ -165,7 +170,10 @@ const CreateProfile = () => {
         <Modal.Header closeButton>
           <Modal.Title>Profile Created 😃</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, your profile on quicklance is created successfully, Now explore the projects page to see active projects!!</Modal.Body>
+        <Modal.Body>
+          Woohoo, your profile on quicklance is created successfully, Now
+          explore the projects page to see active projects!!
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Explore

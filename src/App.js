@@ -93,6 +93,7 @@ function App() {
       allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
 
       setConnectedWallet(allAccounts[0]);
+      console.log(allAccounts[0]);
       setAddress(allAccounts[0]);
 
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);

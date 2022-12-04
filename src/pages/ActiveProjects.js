@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import Card from "react-bootstrap/Card";
-import CardGroup from "react-bootstrap/CardGroup";
 import "../styles/activeprojects.css";
-import reef from "../assets/reef.png";
-import ethindia from "../assets/ethindia.png";
-import dapp from "../assets/dapp.png";
 import Uik from "@reef-defi/ui-kit";
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import SignerContext from "../signerContext";
@@ -13,15 +9,18 @@ import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { Provider, Signer } from "@reef-defi/evm-provider";
 import { WsProvider } from "@polkadot/rpc-provider";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const ActiveProjects = () => {
+  const navigate = useNavigate();
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [signer, setSigner] = useState();
   const FactoryAbi = ProjectFactory.abi;
   const factoryContractAddress = ProjectFactory.address;
   const { signerState } = useContext(SignerContext);
+  const [usernameMain, setUsernameMain] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
   const [data, setData] = useState([
@@ -41,8 +40,23 @@ const ActiveProjects = () => {
       url: "http://localhost/project/getprojects",
       method: "get",
     });
-    console.log({res: res.data});
+    console.log({ res: res.data });
     setData(res.data);
+    getOwnerData(res.data.owner);
+  };
+
+  const getOwnerData = async (ownerId) => {
+    const response = await axios({
+      url: `http://localhost/auth/getuser`,
+      method: "post",
+      data: {
+        id: ownerId,
+      },
+    });
+    const { username, profileImage } = response.data;
+    setUsernameMain(username);
+    setProfileImage(profileImage);
+    console.log({ ownerInfo: response.data });
   };
 
   const checkExtension = async () => {
@@ -91,39 +105,69 @@ const ActiveProjects = () => {
     return true;
   };
 
-  const contract = new Contract(
-    factoryContractAddress,
-    FactoryAbi,
-    signerState
-  );
-
   useEffect(() => {
     fetchProjects();
   }, []);
 
   return (
-    <CardGroup className="cardDesign">
+    <div className="cardDesign">
       {data.map((e, index) => {
         // console.log(e.files[0]);
         return (
           <>
-            <Link to={`/project/${e._id}`}>
-              <Card className="cardDiv" key={index}>
+            <Link className="linkDesign">
+              <Card
+                className="cardDiv"
+                style={{
+                  textDecoration: "none",
+                  margin: "5px 30px",
+                  width: "360px",
+                }}
+                key={index}
+              >
                 <Card.Img
-                  //   variant="top"
+                  variant="top"
                   src={e.files[0]}
-                  style={{ maxHeight: "320px", width: "auto" }}
+                  style={{ maxHeight: "220px", width: "auto" }}
                 />
                 <Card.Body>
                   <Card.Title>{e.title}</Card.Title>
                   <Card.Text>{e.description}</Card.Text>
-                  <Link to={"/project"} style={{ textDecoration: "none" }}>
-                    <Uik.Button fill text="View Project" size="large" />
-                  </Link>
+                  <div style={{ display: "flex" }}>
+                    <Link
+                      to={`/project/${e._id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Uik.Button
+                        fill
+                        text="View Project"
+                        size="large"
+                        className="btnProjectt"
+                      />
+                    </Link>
+                    <div style={{ display: "flex" }}>
+                      <Uik.Label text="Requested By" className="labeluser" />
+                      <Uik.Avatar
+                        name={usernameMain}
+                        image={profileImage}
+                        size="small"
+                      />
+                    </div>
+                  </div>
                 </Card.Body>
                 <Card.Footer>
-                  <small className="text-muted">
-                    Project Request on {e.date}
+                  <small className="text-muted" style={{ display: "flex" }}>
+                    <Uik.Tooltip
+                      text="Deadline"
+                      position="right"
+                      className="tooltipBox"
+                    >
+                      <Uik.Button text={e.deadline} />
+                    </Uik.Tooltip>
+                    <div className="budgetDesign">
+                      <Uik.Label text="Budget" className="budgetIn" />
+                    </div>
+                    <Uik.ReefAmount value={e.budget} />
                   </small>
                 </Card.Footer>
               </Card>
@@ -131,7 +175,7 @@ const ActiveProjects = () => {
           </>
         );
       })}
-    </CardGroup>
+    </div>
   );
 };
 
