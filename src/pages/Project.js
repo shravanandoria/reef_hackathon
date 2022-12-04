@@ -16,7 +16,7 @@ import axios from "axios";
 import SignerContext from "../signerContext";
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import { Contract } from "ethers";
-// import "swiper/swiper-bundle.min.css";
+import "swiper/swiper-bundle.min.css";
 
 import { FreeMode, Pagination } from "swiper";
 const Project = () => {
@@ -92,7 +92,6 @@ const Project = () => {
       {address.address ? (
         <>
           <Uik.Card title="" condensed>
-            s
             <div className="divDesign">
               <div className="divTextArea">
                 <Uik.Text
@@ -103,7 +102,7 @@ const Project = () => {
                 <div className="labelDiv">
                   <div style={{ marginRight: "25px" }}>
                     <Uik.Label text="Published On" className="labelText" />
-                    <Uik.Tag color="purple" text={data.date} />
+                    <Uik.Tag color="purple" text={"2021-11-12"} />
                   </div>
                   <div style={{ marginRight: "25px" }}>
                     <Uik.Label text="Project Deadline" className="labelText" />
@@ -118,8 +117,8 @@ const Project = () => {
                   <Uik.Label text="Requested By" className="userText" />
                   <Link to={"/profile"} style={{ textDecoration: "none" }}>
                     <Uik.Avatar
-                      name={usernameMain}
-                      image={profileImage}
+                      name={"Shravan"}
+                      image={reef}
                       className="avatarTest"
                     />
                   </Link>
