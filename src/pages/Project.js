@@ -42,6 +42,7 @@ const Project = () => {
     );
     const res = await factoryContract.deployedProjectsById(id);
     console.log({ res });
+    fetchProposals(res.project);
     setData(res);
   };
 
@@ -69,18 +70,25 @@ const Project = () => {
   };
   const handleShow = () => setApply(true);
 
-  const fetchProposals = async () => {
+  const fetchProposals = async (project) => {
     if (!address.address) return;
     const { abi } = require("./ABI");
-    const factoryContract = new Contract(data.project, abi, signerState);
+    const factoryContract = new Contract(project, abi, signerState);
     const res = await factoryContract.getProposals();
-    console.log({ proposal: res });
-    setProposals(res);
+    let dataObj = [];
+    res.map((e) => {
+      let obj = {
+        cost: e.cost.toString(),
+        summary: e.summary,
+      };
+      dataObj.push(obj);
+    });
+    console.log({ dataObj });
+    setProposals(dataObj);
   };
 
   useEffect(() => {
     fetchProject();
-    fetchProposals();
   }, [address]);
 
   return (
@@ -163,28 +171,22 @@ const Project = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {/* <td>{index + 1}</td> */}
-                    <td>{1}</td>
-                    <td>Mark</td>
-                    {/* <td>{e.cost.toString()} Reef</td> */}
-                    <td>{""} Reef</td>
-                    {/* <td>{e.summary}</td> */}
-                    <td>{"asd"}</td>
-                    <td>
-                      {" "}
-                      <Uik.Button text="Accept Proposal" size="small" success />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>l<td>Jacob</td>
-                    <td>0.8</td>
-                    <td>Talkingg</td>
-                    <td>
-                      {" "}
-                      <Uik.Button text="Accept Proposal" size="small" success />
-                    </td>
-                  </tr>
+                  {proposals.map((e, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>Shravan User</td>
+                      <td>{e.cost} Reef</td>
+                      <td>{e.summary}</td>
+                      <td>
+                        {" "}
+                        <Uik.Button
+                          text="Accept Proposal"
+                          size="small"
+                          success
+                        />
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
               <hr />

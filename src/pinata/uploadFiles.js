@@ -21,7 +21,6 @@ export const uploadFileToIPFS = async (file) => {
       },
     });
     data.append("pinataMetadata", metadata);
-
     const res = await axios.post(url, data, {
       maxBodyLength: "Infinity",
       headers: {

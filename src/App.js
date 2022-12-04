@@ -89,14 +89,14 @@ function App() {
     evmProvider.api.on("ready", async () => {
       const allAccounts = await web3Accounts();
 
-      allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
+      allAccounts[1] && allAccounts[1].address && setWalletConnected(true);
 
-      setConnectedWallet(allAccounts[0]);
-      setAddress(allAccounts[0]);
+      setConnectedWallet(allAccounts[1]);
+      setAddress(allAccounts[1]);
 
-      const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
+      const wallet = new Signer(evmProvider, allAccounts[1].address, injected);
       localStorage.setItem("signer", wallet);
-
+      
       // Claim default account
       if (!(await wallet.isClaimed())) {
         console.log(
