@@ -70,7 +70,6 @@ function App() {
   const URL = "wss://rpc-testnet.reefscan.com/ws";
 
   const checkExtension = async () => {
-    console.log("checking reef extension");
     setConnecting(true);
     let allInjected = await web3Enable("Reef");
 
@@ -93,10 +92,10 @@ function App() {
       allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
 
       setConnectedWallet(allAccounts[0]);
-      console.log(allAccounts[0]);
       setAddress(allAccounts[0]);
 
       const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
+      localStorage.setItem("signer", wallet);
 
       // Claim default account
       if (!(await wallet.isClaimed())) {

@@ -31,9 +31,6 @@ const CreateProfile = () => {
     email: "",
   });
 
-  useEffect(() => {
-    console.log(address);
-  }, []);
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -86,7 +83,6 @@ const CreateProfile = () => {
     setIsLoading(true);
     try {
       const link = await uploadFileToIPFS(file);
-      console.log(link);
 
       const userData = {
         fname: data.fname,
@@ -96,7 +92,6 @@ const CreateProfile = () => {
         email: data.email,
         wallet: address.address,
       };
-      console.log(userData);
       const res = await axios({
         url: "http://localhost/auth/signup",
         method: "post",
@@ -109,7 +104,6 @@ const CreateProfile = () => {
           wallet: address.address,
         },
       });
-      console.log({ res: res.data });
       setIsLoading(false);
       handleShow();
     } catch (error) {

@@ -14,7 +14,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import "../styles/createproject.css";
-
 const CreateProject = () => {
   const navigate = useNavigate();
 
@@ -39,7 +38,8 @@ const CreateProject = () => {
   const [data, setData] = useState({
     title: "",
     description: "",
-    deadline: 0,
+    deadline: "",
+    date: "",
     budget: "",
   });
   const FactoryAbi = ProjectFactory.abi;
@@ -53,11 +53,9 @@ const CreateProject = () => {
       ...data,
       [e.target.name]: e.target.value,
     });
-    console.log(data);
   };
 
   const checkExtension = async () => {
-    console.log("check ex called");
     let allInjected = await web3Enable("Reef");
 
     if (allInjected.length === 0) {
@@ -82,10 +80,10 @@ const CreateProject = () => {
 
       // Claim default account
       if (!(await wallet.isClaimed())) {
-        console.log(
-          "No claimed EVM account found -> claimed default EVM account: ",
-          await wallet.getAddress()
-        );
+        // console.log(
+        //   "No claimed EVM account found -> claimed default EVM account: ",
+        //   await wallet.getAddress()
+        // );
         await wallet.claimDefaultAccount();
       }
       setSigner(wallet);
@@ -101,11 +99,10 @@ const CreateProject = () => {
 
   const onChageFileSave = async (e) => {
     // setFiles();
-    console.log("loading true");
     setIsLoading(true);
-    const imageFiles = await uploadFileToIPFS(e.target.files);
+    const imageFiles = await uploadFileToIPFS(e.target.files[0]);
+    console.log({ imageFiles });
     setImages(imageFiles);
-    console.log("loading false");
     setIsLoading(false);
   };
 
@@ -127,7 +124,6 @@ const CreateProject = () => {
       });
 
       const result = await res.data;
-      console.log(result);
       setIsLoading(false);
       handleShow();
     } catch (error) {
@@ -139,22 +135,30 @@ const CreateProject = () => {
   const createProject = async (e) => {
     e.preventDefault();
     if (!address.address) return alert("Please connect your wallet");
+    setIsLoading(true);
     await checkSigner();
-    const parsedBudget = ethers.utils.parseEther(data.budget.toString());
+    let parsedBudget = ethers.utils.parseEther(data.budget.toString());
     const factoryContract = new Contract(
       factoryContractAddress,
       FactoryAbi,
       signerState
     );
+    console.log({ images });
+    let nowDate = Date.now();
     const result = await factoryContract.createProject(
       data.title,
       data.description,
-      parsedBudget,
+      images,
+      data.budget,
+      nowDate,
       data.deadline,
       { value: parsedBudget }
     );
-    // const result = await factoryContract.getDeployedProjects();
-    console.log(result);
+    const projects = await factoryContract.getDeployedProjects();
+    console.log(projects);
+    console.log({ result });
+    setIsLoading(false);
+    handleShow();
   };
 
   return (
@@ -185,7 +189,11 @@ const CreateProject = () => {
               label="Deadline"
               name="deadline"
               required={true}
-              onChange={onChange}
+              onChange={(e) => {
+                let date = new Date();
+                let sec = date.getSeconds(e);
+                onChange(e);
+              }}
             />
           </Uik.Container>
           <Uik.Input

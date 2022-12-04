@@ -2,7 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "ProjectFactory",
   "sourceName": "contracts/ProjectFactory.sol",
-  "address": "0x90219CE45f3201bfcD333e656Cf78cf1C28D8F93",
+  "address": "0xc7665DA54563aA04E311dD533aEB6eC14d49bbDf",
   "abi": [
     {
       "inputs": [
@@ -17,19 +17,105 @@
           "type": "string"
         },
         {
+          "internalType": "string",
+          "name": "_image",
+          "type": "string"
+        },
+        {
           "internalType": "uint256",
           "name": "_budget",
           "type": "uint256"
         },
         {
-          "internalType": "uint256",
+          "internalType": "string",
+          "name": "_date",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
           "name": "_deadline",
-          "type": "uint256"
+          "type": "string"
         }
       ],
       "name": "createProject",
       "outputs": [],
       "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "deployedProjectsById",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "projectId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "projectTitle",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "projectDesc",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "budget",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isComplete",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "date",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "deadline",
+              "type": "string"
+            },
+            {
+              "internalType": "address payable",
+              "name": "_owner",
+              "type": "address"
+            },
+            {
+              "internalType": "address payable",
+              "name": "freelancer",
+              "type": "address"
+            },
+            {
+              "internalType": "contract Project",
+              "name": "project",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct ProjectFactory.ProjectInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -54,6 +140,11 @@
               "type": "string"
             },
             {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
               "internalType": "uint256",
               "name": "budget",
               "type": "uint256"
@@ -64,14 +155,14 @@
               "type": "bool"
             },
             {
-              "internalType": "uint256",
+              "internalType": "string",
               "name": "date",
-              "type": "uint256"
+              "type": "string"
             },
             {
-              "internalType": "uint256",
+              "internalType": "string",
               "name": "deadline",
-              "type": "uint256"
+              "type": "string"
             },
             {
               "internalType": "address payable",
@@ -119,6 +210,11 @@
               "type": "string"
             },
             {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
               "internalType": "uint256",
               "name": "budget",
               "type": "uint256"
@@ -129,14 +225,14 @@
               "type": "bool"
             },
             {
-              "internalType": "uint256",
+              "internalType": "string",
               "name": "date",
-              "type": "uint256"
+              "type": "string"
             },
             {
-              "internalType": "uint256",
+              "internalType": "string",
               "name": "deadline",
-              "type": "uint256"
+              "type": "string"
             },
             {
               "internalType": "address payable",
@@ -201,6 +297,11 @@
           "type": "string"
         },
         {
+          "internalType": "string",
+          "name": "image",
+          "type": "string"
+        },
+        {
           "internalType": "uint256",
           "name": "budget",
           "type": "uint256"
@@ -211,14 +312,14 @@
           "type": "bool"
         },
         {
-          "internalType": "uint256",
+          "internalType": "string",
           "name": "date",
-          "type": "uint256"
+          "type": "string"
         },
         {
-          "internalType": "uint256",
+          "internalType": "string",
           "name": "deadline",
-          "type": "uint256"
+          "type": "string"
         },
         {
           "internalType": "address payable",
