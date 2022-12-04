@@ -156,7 +156,7 @@ const CreateProject = () => {
   return (
     <div className="mainContainer">
       <div className="FormContainer">
-        <form onSubmit={cenCreateProject}>
+        <form onSubmit={createProject}>
           <Uik.Text
             className="fontCustom"
             text="Create Your Project Request"
