@@ -1,13 +1,44 @@
 .cardDesign{
-    padding: 100px 40px;
+    padding: 60px 40px;
     display: flex;
     /* flex-direction: column; */
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    text-decoration: none;
 }
 
-.cardDiv{
+/* .cardDiv{
     margin: 15px 40px;
     width: 600px;
+} */
+
+.linkDesign{
+    text-decoration: none;
+}
+
+.tooltipBox{
+    margin-right: 13px;
+}
+
+.budgetDesign{
+    margin-left: 80px;
+    position: relative;
+}
+.budgetIn{
+    position: absolute;
+    bottom: 22px;
+    font-size: 11px;
+    right: -60px;
+}
+
+.btnProjectt{
+    margin-right: 45px;
+    text-decoration: none;
+}
+
+.labeluser{
+    position: absolute;
+    right:15%;
+    font-size: 11px;
 }
