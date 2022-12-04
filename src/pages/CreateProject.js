@@ -145,6 +145,8 @@ const CreateProject = () => {
     );
     console.log({ images });
     let nowDate = Date.now();
+    console.log({ nowDate });
+
     const result = await factoryContract.createProject(
       data.title,
       data.description,

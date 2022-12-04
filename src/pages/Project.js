@@ -22,7 +22,7 @@ const Project = () => {
   const { id } = useParams();
   const [usernameMain, setUsernameMain] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [date, setDate] = useState();
 
   const { signerState, address } = useContext(SignerContext);
@@ -38,21 +38,18 @@ const Project = () => {
     const res = await factoryContract.deployedProjectsById(id);
     console.log({ res });
     setData(res);
-    // const { projectTitle, projectDesc, image, date } = res;
-    // console.log(projectTitle, projectDesc, image, date);
-    // setIsLoading(false);
-    // const res = await axios({
-    //   url: `http://localhost/project/getprojectById/${id}`,
-    //   method: "get",
-    // });
-    // const d = new Date();
-    // const date = res.data.date;
-    // const dateLive = d.getDate(date);
-    // const monthLive = d.getMonth(date);
-    // const YearLive = d.getFullYear(date);
-    // const fullDate = `${YearLive}-${monthLive}-${dateLive}`;
-    // setData({ ...res.data, date: fullDate });
-    // getOwnerData(res.data.owner);
+  };
+
+  const applyProposal = async () => {
+    if (!address.address) return;
+    
+    const factoryContract = new Contract(
+      factoryContractAddress,
+      FactoryAbi,
+      signerState
+    );
+    const res = await factoryContract.deployedProjectsById(id);
+    console.log({ res });
   };
 
   const getOwnerData = async (ownerId) => {
@@ -86,10 +83,9 @@ const Project = () => {
 
   return (
     <>
-      {address.address ? (
+      {data ? (
         <>
           <Uik.Card title="" condensed>
-            s
             <div className="divDesign">
               <div className="divTextArea">
                 <Uik.Text
@@ -108,7 +104,7 @@ const Project = () => {
                   </div>
                   <div>
                     <Uik.Label text="Project Budget" className="labelText" />
-                    {/* <Uik.ReefAmount value={data && data.budget.toString()} /> */}
+                    {data && <Uik.ReefAmount value={data.budget.toNumber()} />}
                   </div>
                 </div>
                 <div className="userProfile">

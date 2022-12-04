@@ -28,7 +28,7 @@ contract ProjectFacroty {
         string memory _desc,
         uint256 _budget,
         uint256 _deadline
-    ) public payable {
+    ) public payable returns (ProjectInfo) {
         require(msg.value > 0, "transfer more than 0 tokens");
         uint256 projectId = projectCount.current();
         Project  newProject = new Project(payable(msg.sender));
@@ -48,6 +48,7 @@ contract ProjectFacroty {
         payable(address(newProject)).transfer(address(this).balance);
         projects[projectId] = project;
         projectCount.increment();
+        return project;
     }
 
     function getDeployedProjects() public view returns (ProjectInfo[] memory) {
