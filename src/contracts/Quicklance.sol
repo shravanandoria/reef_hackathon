@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract ProjectFacroty {
+contract ProjectFactory {
 
     using Counters for Counters.Counter;
     Counters.Counter public projectCount;
@@ -14,10 +14,11 @@ contract ProjectFacroty {
         uint256 projectId;
         string projectTitle;
         string projectDesc;
+        string image;
         uint256 budget;
         bool isComplete;
-        uint256 date;
-        uint256 deadline;
+        string date;
+        string deadline;
         address payable _owner;
         address payable freelancer;
         Project project;
@@ -26,9 +27,11 @@ contract ProjectFacroty {
     function createProject(
         string memory _title,
         string memory _desc,
+        string memory _image,
         uint256 _budget,
-        uint256 _deadline
-    ) public payable returns (ProjectInfo) {
+        string memory _date,
+        string memory _deadline
+    ) public payable {
         require(msg.value > 0, "transfer more than 0 tokens");
         uint256 projectId = projectCount.current();
         Project  newProject = new Project(payable(msg.sender));
@@ -36,9 +39,10 @@ contract ProjectFacroty {
             projectId,
             _title,
             _desc,
+            _image,
             _budget,
             false,
-            block.timestamp,
+            _date,
             _deadline,
             payable(msg.sender),
             payable(address(0)),
@@ -48,7 +52,6 @@ contract ProjectFacroty {
         payable(address(newProject)).transfer(address(this).balance);
         projects[projectId] = project;
         projectCount.increment();
-        return project;
     }
 
     function getDeployedProjects() public view returns (ProjectInfo[] memory) {
@@ -77,6 +80,11 @@ contract ProjectFacroty {
             }
         }
         return items;
+    }
+
+    function deployedProjectsById(uint256 _id) public view returns(ProjectInfo memory){
+        ProjectInfo memory project = projects[_id];
+        return project;
     }
 
 

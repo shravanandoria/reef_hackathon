@@ -27,8 +27,10 @@ const Project = () => {
   const [profileImage, setProfileImage] = useState("");
   const [data, setData] = useState();
   const [date, setDate] = useState();
-
+  const [applyData, setApplyData] = useState({ cost: 0, summary: "" });
   const { signerState, address } = useContext(SignerContext);
+  const [proposals, setProposals] = useState([]);
+  const [factoryContract, setFactoryContract] = useState();
 
   const fetchProject = async () => {
     // setIsLoading(true);
@@ -43,45 +45,42 @@ const Project = () => {
     setData(res);
   };
 
-  const applyProposal = async () => {
-    if (!address.address) return;
-    
-    const factoryContract = new Contract(
-      factoryContractAddress,
-      FactoryAbi,
-      signerState
-    );
-    const res = await factoryContract.deployedProjectsById(id);
-    console.log({ res });
-  };
-
-  const getOwnerData = async (ownerId) => {
-    const response = await axios({
-      url: `http://localhost/auth/getuser`,
-      method: "post",
-      data: {
-        id: ownerId,
-      },
-    });
-    const { username, profileImage } = response.data;
-    setUsernameMain(username);
-    setProfileImage(profileImage);
+  const onChangeModal = (e) => {
+    setApplyData({ ...applyData, [e.target.name]: e.target.value });
+    console.log(applyData);
   };
 
   const [show, setShow] = useState(false);
   const [apply, setApply] = useState(false);
   const [value, setValue] = useState("");
 
-  const handleSubmit = () => {
-    // setApply(false);
+  const handleSubmit = async () => {
+    if (!address.address) return;
+    const { abi } = require("./ABI");
+    const factoryContract = new Contract(data.project, abi, signerState);
+    const res = await factoryContract.createProposal(
+      applyData.cost,
+      applyData.summary
+    );
+    console.log({ res });
   };
   const handleClose = () => {
     setApply(false);
   };
   const handleShow = () => setApply(true);
 
+  const fetchProposals = async () => {
+    if (!address.address) return;
+    const { abi } = require("./ABI");
+    const factoryContract = new Contract(data.project, abi, signerState);
+    const res = await factoryContract.getProposals();
+    console.log({ proposal: res });
+    setProposals(res);
+  };
+
   useEffect(() => {
     fetchProject();
+    fetchProposals();
   }, [address]);
 
   return (
@@ -122,7 +121,7 @@ const Project = () => {
                 </div>
                 <Uik.Text
                   className="title titleProject"
-                  text={data.description}
+                  text={data.projectDesc}
                   type="title"
                 />
               </div>
@@ -134,7 +133,9 @@ const Project = () => {
             <div className="btndiv">
               <Uik.Button
                 text="Apply"
-                onClick={handleShow}
+                onClick={() => {
+                  handleShow();
+                }}
                 success
                 className="applyBtn"
               />
@@ -163,18 +164,20 @@ const Project = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1</td>
+                    {/* <td>{index + 1}</td> */}
+                    <td>{1}</td>
                     <td>Mark</td>
-                    <td>2300</td>
-                    <td>Talkingg</td>
+                    {/* <td>{e.cost.toString()} Reef</td> */}
+                    <td>{""} Reef</td>
+                    {/* <td>{e.summary}</td> */}
+                    <td>{"asd"}</td>
                     <td>
                       {" "}
                       <Uik.Button text="Accept Proposal" size="small" success />
                     </td>
                   </tr>
                   <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
+                    <td>2</td>l<td>Jacob</td>
                     <td>0.8</td>
                     <td>Talkingg</td>
                     <td>
@@ -251,6 +254,7 @@ const Project = () => {
               </Swiper>
             </div>
           </Uik.Card>
+          {/* Modal apply proposal */}
           <Modal show={apply} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Submit a Proposal</Modal.Title>
@@ -258,15 +262,17 @@ const Project = () => {
             <Modal.Body>
               <Uik.Input
                 label="Coat (Your coatation in Reef)"
-                value={value}
                 required={true}
-                onInput={(e) => setValue(e.target.value)}
+                name="cost"
+                onChange={onChangeModal}
               />
               <Uik.Input
                 required={true}
                 label="Summary (How will you work/Which tech stack will you use)"
                 textarea
+                name="summary"
                 className="inputTextarea"
+                onChange={onChangeModal}
               />
             </Modal.Body>
             <Modal.Footer>
