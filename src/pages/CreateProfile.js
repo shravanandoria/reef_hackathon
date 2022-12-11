@@ -5,7 +5,7 @@ import "../styles/createprofile.css";
 import { uploadFileToIPFS } from "../pinata/uploadFiles";
 import axios from "axios";
 import { useContext } from "react";
-import SignerContext from "../signerContext";
+import SignerContext from "../actions/signerContext";
 import { useAsyncError, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -30,7 +30,6 @@ const CreateProfile = () => {
     username: "",
     email: "",
   });
-
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

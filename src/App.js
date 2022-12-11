@@ -8,17 +8,9 @@ import ActiveProjects from "./pages/ActiveProjects";
 import GettingStarted from "./pages/GettingStarted";
 import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
-import { Provider, Signer } from "@reef-defi/evm-provider";
-import { WsProvider } from "@polkadot/rpc-provider";
-
-import { useContext } from "react";
-import SignerContext from "./signerContext";
-import axios from "axios";
 import Project from "./pages/Project";
 import CreateProfile from "./pages/CreateProfile";
 import Profile from "./pages/Profile";
-import ProjectPage from "./pages/ProjectPage";
 
 function App() {
   const routes = [
@@ -60,86 +52,9 @@ function App() {
     },
   ];
 
-  const { setSignerState, setAddress } = useContext(SignerContext);
-
-  const [signer, setSigner] = useState();
-  const [connecting, setConnecting] = useState(false);
-  const [isWalletConnected, setWalletConnected] = useState(false);
-  const [connectedWallet, setConnectedWallet] = useState("");
-
-  const URL = "wss://rpc-testnet.reefscan.com/ws";
-
-  const checkExtension = async () => {
-    setConnecting(true);
-    let allInjected = await web3Enable("Reef");
-
-    if (allInjected.length === 0) {
-      return false;
-    }
-
-    let injected;
-    if (allInjected[0] && allInjected[0].signer) {
-      injected = allInjected[0].signer;
-    }
-
-    const evmProvider = new Provider({
-      provider: new WsProvider(URL),
-    });
-
-    evmProvider.api.on("ready", async () => {
-      const allAccounts = await web3Accounts();
-
-      allAccounts[1] && allAccounts[1].address && setWalletConnected(true);
-
-      setConnectedWallet(allAccounts[1]);
-      setAddress(allAccounts[1]);
-
-      const wallet = new Signer(evmProvider, allAccounts[1].address, injected);
-      localStorage.setItem("signer", wallet);
-      
-      // Claim default account
-      if (!(await wallet.isClaimed())) {
-        console.log(
-          "No claimed EVM account found -> claimed default EVM account: ",
-          await wallet.getAddress()
-        );
-        await wallet.claimDefaultAccount();
-      }
-
-      setSigner(wallet);
-      setSignerState(wallet);
-      localStorage.setItem("walletConnected", true);
-      setConnecting(false);
-    });
-  };
-
-  // const apply
-
-  // const createAccount = async () => {
-  //   const res = await axios({
-  //     url: "http://localhost/auth/signup",
-  //     method: "post",
-  //     data: {
-
-  //     }
-  //   })
-  // }
-
-  const checkSigner = async () => {
-    if (!signer) {
-      await checkExtension();
-    }
-    return true;
-  };
-
   return (
     <div>
-      <Navbar
-        checkExtension={checkExtension}
-        checkSigner={checkSigner}
-        connectedWallet={connectedWallet.address}
-        connecting={connecting}
-      />
+      <Navbar />
       <Routes>
         {routes.map((e, index) => (
           <Route key={index} path={e.path} element={e.element} />

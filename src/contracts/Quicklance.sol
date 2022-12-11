@@ -87,7 +87,6 @@ contract ProjectFactory {
         return project;
     }
 
-
 }
 
 contract Project {

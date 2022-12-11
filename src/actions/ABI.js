@@ -127,19 +127,6 @@ export const abi = [
   },
   {
     inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address payable",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "proposalCount",
     outputs: [
       {

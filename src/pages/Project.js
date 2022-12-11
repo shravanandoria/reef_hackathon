@@ -13,7 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import SignerContext from "../signerContext";
+import SignerContext from "../actions/signerContext";
 import ProjectFactory from "../contracts/ProjectFactory.json";
 import { Contract } from "ethers";
 import "swiper/swiper-bundle.min.css";
@@ -28,17 +28,17 @@ const Project = () => {
   const [data, setData] = useState();
   const [date, setDate] = useState();
   const [applyData, setApplyData] = useState({ cost: 0, summary: "" });
-  const { signerState, address } = useContext(SignerContext);
+  const { signer, address } = useContext(SignerContext);
   const [proposals, setProposals] = useState([]);
   const [factoryContract, setFactoryContract] = useState();
 
   const fetchProject = async () => {
     // setIsLoading(true);
-    if (!address.address) return;
+    if (!address) return;
     const factoryContract = new Contract(
       factoryContractAddress,
       FactoryAbi,
-      signerState
+      signer
     );
     const res = await factoryContract.deployedProjectsById(id);
     console.log({ res });
@@ -53,12 +53,12 @@ const Project = () => {
 
   const [show, setShow] = useState(false);
   const [apply, setApply] = useState(false);
-  const [value, setValue] = useState("");
+  const [owner, setOwner] = useState(false);
 
   const handleSubmit = async () => {
-    if (!address.address) return;
+    if (!address) return;
     const { abi } = require("./ABI");
-    const factoryContract = new Contract(data.project, abi, signerState);
+    const factoryContract = new Contract(data.project, abi, signer);
     const res = await factoryContract.createProposal(
       applyData.cost,
       applyData.summary
@@ -71,12 +71,15 @@ const Project = () => {
   const handleShow = () => setApply(true);
 
   const fetchProposals = async (project) => {
-    if (!address.address) return;
+    fetchOwner(project);
+    if (!address) return;
     const { abi } = require("./ABI");
-    const factoryContract = new Contract(project, abi, signerState);
+    const factoryContract = new Contract(project, abi, signer);
     const res = await factoryContract.getProposals();
+    console.log({ project: res });
     let dataObj = [];
     res.map((e) => {
+      console.log({ e });
       let obj = {
         cost: e.cost.toString(),
         summary: e.summary,
@@ -85,6 +88,23 @@ const Project = () => {
     });
     console.log({ dataObj });
     setProposals(dataObj);
+  };
+
+  const acceptProposal = async () => {
+    const res = factoryContract.approveProposal(id);
+  };
+
+  const fetchOwner = async (project) => {
+    console.log("fetch owner called");
+    const { abi } = require("./ABI");
+    const factoryContract = new Contract(project, abi, signer);
+    const res = await factoryContract.owner();
+    setOwner(res);
+    console.log({ owner: res });
+    console.log({
+      address,
+      owner: res,
+    });
   };
 
   useEffect(() => {
@@ -118,7 +138,7 @@ const Project = () => {
                   </div>
                 </div>
                 <div className="userProfile">
-                  <Uik.Label text="Requested By" className="userText" />
+                  <Uik.Label text="Requested By" className="use rText" />
                   <Link to={"/profile"} style={{ textDecoration: "none" }}>
                     <Uik.Avatar
                       name={"Shravan"}
@@ -179,11 +199,13 @@ const Project = () => {
                       <td>{e.summary}</td>
                       <td>
                         {" "}
-                        <Uik.Button
-                          text="Accept Proposal"
-                          size="small"
-                          success
-                        />
+                        {address === owner && (
+                          <Uik.Button
+                            text="Accept Proposal"
+                            size="small"
+                            success
+                          />
+                        )}
                       </td>
                     </tr>
                   ))}

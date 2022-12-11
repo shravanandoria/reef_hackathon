@@ -3,24 +3,19 @@ import Card from "react-bootstrap/Card";
 import "../styles/activeprojects.css";
 import Uik from "@reef-defi/ui-kit";
 import ProjectFactory from "../contracts/ProjectFactory.json";
-import SignerContext from "../signerContext";
+import SignerContext from "../actions/signerContext";
 import { Contract } from "ethers";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
-import { Provider, Signer } from "@reef-defi/evm-provider";
-import { WsProvider } from "@polkadot/rpc-provider";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import reef from "../assets/reef.png";
-
 import Button from "react-bootstrap/Button";
 
 const ActiveProjects = () => {
+  const { signer, address, factoryContract } = useContext(SignerContext);
   const navigate = useNavigate();
   const [isWalletConnected, setWalletConnected] = useState(false);
-  const [signer, setSigner] = useState();
   const FactoryAbi = ProjectFactory.abi;
   const factoryContractAddress = ProjectFactory.address;
-  const { signerState, address } = useContext(SignerContext);
   const [usernameMain, setUsernameMain] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const URL = "wss://rpc-testnet.reefscan.com/ws";
@@ -52,53 +47,10 @@ const ActiveProjects = () => {
     setProfileImage(profileImage);
   };
 
-  const checkExtension = async () => {
-    let allInjected = await web3Enable("Reef");
-
-    if (allInjected.length === 0) {
-      return false;
-    }
-
-    let injected;
-    if (allInjected[0] && allInjected[0].signer) {
-      injected = allInjected[0].signer;
-    }
-
-    const evmProvider = new Provider({
-      provider: new WsProvider(URL),
-    });
-
-    evmProvider.api.on("ready", async () => {
-      const allAccounts = await web3Accounts();
-
-      allAccounts[0] && allAccounts[0].address && setWalletConnected(true);
-
-      const wallet = new Signer(evmProvider, allAccounts[0].address, injected);
-
-      if (!(await wallet.isClaimed())) {
-        await wallet.claimDefaultAccount();
-      }
-
-      setSigner(wallet);
-    });
-  };
-
-  const checkSigner = async () => {
-    if (!signer) {
-      await checkExtension();
-    }
-    return true;
-  };
-
   const fetchProjects = async () => {
     setIsLoading(true);
-    if (!address.address) return;
-    // await checkSigner();
-    const factoryContract = new Contract(
-      factoryContractAddress,
-      FactoryAbi,
-      signerState
-    );
+    if (!address) return;
+
     const res = await factoryContract.getDeployedProjects();
     const { projectTitle, projectDesc } = res;
     console.log(res);

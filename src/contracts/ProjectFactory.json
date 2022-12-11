@@ -2,7 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "ProjectFactory",
   "sourceName": "contracts/ProjectFactory.sol",
-  "address": "0x5d535Ad9590F8A4aB47aB2C345186e54487ACaD6",
+  "address": "0x164226f14Afd3A2F63529D7783968Fcb0F1728C9",
   "abi": [
     {
       "inputs": [
@@ -30,6 +30,11 @@
           "internalType": "string",
           "name": "_date",
           "type": "string"
+        },
+        {
+          "internalType": "address payable",
+          "name": "_owner",
+          "type": "address"
         },
         {
           "internalType": "string",
@@ -96,7 +101,7 @@
             },
             {
               "internalType": "address payable",
-              "name": "_owner",
+              "name": "owner",
               "type": "address"
             },
             {
@@ -166,7 +171,7 @@
             },
             {
               "internalType": "address payable",
-              "name": "_owner",
+              "name": "owner",
               "type": "address"
             },
             {
@@ -236,7 +241,7 @@
             },
             {
               "internalType": "address payable",
-              "name": "_owner",
+              "name": "owner",
               "type": "address"
             },
             {
@@ -323,7 +328,7 @@
         },
         {
           "internalType": "address payable",
-          "name": "_owner",
+          "name": "owner",
           "type": "address"
         },
         {
